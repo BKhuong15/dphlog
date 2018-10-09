@@ -1,0 +1,39 @@
+# Prevent direct access to these file types.
+<FilesMatch "\.(sql|md|sh|scss|rb|db|sqlite|tpl(\.php)?|pg(\.php)?|db(\.php)?)$">
+  Require all denied
+  #Order allow,deny
+</FilesMatch>
+
+# Prevent direct access to these file types also.
+<FilesMatch "\.(test(\.php)?|inc(\.php)?)$">
+  Require all denied
+  #Order allow,deny
+</FilesMatch>
+#
+## Prevent direct access to these js file types.
+#<FilesMatch "\.(node(\.js)?|lib(\.js)?|db(\.js)?)$">
+#  Require all denied
+#  #Order allow,deny
+#</FilesMatch>
+
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+
+<IfModule mod_rewrite.c>
+
+  # If the user stubles upon a directory name redirect them to the error page.
+  # This has the effect of not finding a correct client code and going to the
+  # client code form in most cases.
+  ErrorDocument 403 /error
+
+  # Make sure url's can be rewritten.
+  RewriteEngine on
+
+  # Block access to hidden files
+  RewriteRule "(^|/)\." - [F]
+
+  # Redirect requests that are not files or directories to index.php.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !=/favicon.ico
+  RewriteRule ^ index.php [L]
+</IfModule>

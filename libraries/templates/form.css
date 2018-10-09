@@ -1,0 +1,30 @@
+/* line 5, ../scss/form.scss */
+body > form {
+  margin-left: 20px;
+}
+
+/* line 11, ../scss/form.scss */
+.field_group {
+  float: left;
+  width: 250px;
+}
+
+/* line 18, ../scss/form.scss */
+.field {
+  float: left;
+  clear: left;
+  margin-top: 10px;
+}
+/* line 24, ../scss/form.scss */
+.field label,
+.field input,
+.field select,
+.field textarea {
+  float: left;
+}
+/* line 32, ../scss/form.scss */
+.field input,
+.field select,
+.field textarea {
+  clear: left;
+}

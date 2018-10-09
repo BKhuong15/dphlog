@@ -1,0 +1,6 @@
+.sass-cache
+*.db-journal
+*.db
+.idea
+ValloricMonsterStatblock
+platform.inc.php
