@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
   <head>
+    <meta http-equiv="Content-Language" content="en">
     <title><?php echo $title ?></title>
     <?php foreach($css_file_paths as $css_file_path): ?>
       <link rel="stylesheet" href="<?php echo $css_file_path?>">

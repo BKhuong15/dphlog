@@ -35,7 +35,8 @@ if (!array_key_exists($path, $registry))
 
   if ($link)
   {
-    redirect($link);
+    updateLink($link['code'], $link['visits'] + 1);
+    redirect($link['link']);
   }
   else
   {

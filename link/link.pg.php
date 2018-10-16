@@ -57,13 +57,16 @@ function linkListPage()
   $template->setMenu(menu());
 
   $table = new TableTemplate('link_list');
-  $table->setHeader(array('Short', 'Target', 'Created'));
+  $table->setHeader(array('Short', 'Target', 'User', 'Visits', 'Created'));
   $links = getLinkList(getUrlID('page', 1));
   foreach($links as $link)
   {
     $row = array();
     $row[] = u('/' . $link['code'], array('absolute' => TRUE));
-    $row[] = $link['link'];
+    $row[] = sanitizeXss($link['link']);
+    $user = getUser($link['user_id']);
+    $row[] = sanitize($user['username']);
+    $row[] = $link['visits'];
     $row[] = date(DATE_FORM, $link['timestamp']);
     $table->addRow($row);
   }

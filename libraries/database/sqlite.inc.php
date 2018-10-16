@@ -49,9 +49,10 @@ class SQLite extends Database
     if ($query->getOrders())
     {
       $sql .= ' ORDER BY';
-      foreach ($query->getOrders() as $alias => $dir)
+      foreach ($query->getOrders() as $order)
       {
-        $sql .= ' ' . $alias . ' ' . $dir . ',';
+        $sql .= ' ' . $this->_buildOrder($order);
+        $sql .= ',';
       }
     }
     $sql = trim($sql, ',');

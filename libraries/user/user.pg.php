@@ -57,8 +57,8 @@ function userListPage()
   {
     $row = array();
     $row[] = $user['id'];
-    $row[] = htmlWrap('a', $user['username'], array('href' => '/user?user_id=' . $user['id']));
-    $row[] = $user['email'];
+    $row[] = htmlWrap('a', sanitize($user['username']), array('href' => '/user?user_id=' . $user['id']));
+    $row[] = sanitize($user['email']);
     $table->addRow($row);
   }
 

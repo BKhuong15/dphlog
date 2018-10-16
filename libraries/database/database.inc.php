@@ -9,7 +9,16 @@ abstract class Database
   protected $db;
 
   // VCrUD operations.
+  /**
+   * @param SelectQuery $query
+   * @return bool|array()
+   */
   abstract function select(SelectQuery $query);
+
+  /**
+   * @param SelectQuery $query
+   * @return array
+   */
   function selectList(SelectQuery $query)
   {
     $results = $this->select($query);
@@ -21,6 +30,11 @@ abstract class Database
     }
     return $list;
   }
+
+  /**
+   * @param SelectQuery $query
+   * @return bool|array
+   */
   function selectObject(SelectQuery $query)
   {
     $results = $this->select($query);
@@ -32,9 +46,22 @@ abstract class Database
     return $result;
   }
 
+  /**
+   * @param InsertQuery $query
+   * @return bool|int
+   */
   abstract function insert(InsertQuery $query);
+
+  /**
+   * @param UpdateQuery $query
+   */
   abstract function update(UpdateQuery $query);
+
+  /**
+   * @param DeleteQuery $query
+   */
   abstract function delete(DeleteQuery $query);
+
   function passThrough($query)
   {
     return $this->db->query($query);
@@ -279,6 +306,25 @@ class UpdateQuery extends Query
     );
     return $this;
   }
+
+  function addFieldBypassValue($name, $value, $field_alias = '', $table_alias = '')
+  {
+    if (!$field_alias)
+    {
+      $field_alias = $name;
+    }
+    if (!$table_alias)
+    {
+      $table_alias = key($this->tables);
+    }
+    $this->fields[$name] = array(
+      'field_alias' => $field_alias,
+      'table_alias' => $table_alias,
+      'value' => $value,
+      'value_bypass' => TRUE,
+    );
+    return $this;
+  }
 }
 
 /**
@@ -298,10 +344,12 @@ class CreateQuery extends Query
   // P = Primary Key
   // N = Not Null
   // U = Unique
-  function addField($name, $type = 'INTEGER', $flags = array(), $default = FALSE)
+  function addField($name, $type = 'INTEGER', $length = 0, $flags = array(), $default = FALSE)
   {
+    assert(is_int($length) || strtolower($length) === 'max', 'Length must be an integer or "max"');
     $this->fields[$name] = array(
       'type' => $type,
+      'length' => $length,
       'flags' => $flags,
       'default' => $default
     );
@@ -344,6 +392,8 @@ class QueryCondition
   {
     $this->field_alias = $field_alias;
     $this->table_alias = $table_alias;
+    $this->value_field_alias = FALSE;
+    $this->value_field_table_alias = FALSE;
     $this->comparison = $comparison;
     $this->value = $value;
     $this->group = 'default';
@@ -391,16 +441,25 @@ class QueryCondition
 
   function getValue()
   {
-    if ($this->value_field_table_alias)
-    {
-      return $this->value_field_table_alias . '.' . $this->value_field_alias;
-    }
+    assert(!$this->value_field_table_alias, 'Value field must use getValueTable & getValueField');
     return $this->value;
   }
 
   function isValueField()
   {
     return (bool)$this->value_field_table_alias;
+  }
+
+  function getValueTable()
+  {
+    assert((bool)$this->value_field_table_alias, 'No value table. Use setValueField or getValue.');
+    return $this->value_field_table_alias;
+  }
+
+  function getValueField()
+  {
+    assert((bool)$this->value_field_table_alias, 'No value table. Use setValueField or getValue.');
+    return $this->value_field_alias;
   }
 
   function getGroup()
