@@ -1,6 +1,6 @@
-# DPH Minify
+# DPH Log Viewer
 
-A simple minify website. Has basic user management and a history of the links created.
+A simple PHP error log navigator.
 
 # Install
 1. Clone the repository to an apache vhost.
@@ -11,8 +11,3 @@ A simple minify website. Has basic user management and a history of the links cr
 6. Return to "home" by selecting the "home" link in the menu at the top.
 7. Paste the url that should be minified into the form and submit.
 8. Use the "copy link" button to copy the minified URL to the clipboard.
-
-# Wishlist
-1. Track ip of the visitors in a log.
-1. Prettify site.
-1. Add MySQL support.

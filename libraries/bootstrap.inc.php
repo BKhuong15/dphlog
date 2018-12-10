@@ -45,6 +45,6 @@ include ROOT_PATH . '/libraries/user/user.db.php';
 include ROOT_PATH . '/libraries/user/user.inc.php';
 include ROOT_PATH . '/libraries/user/user.pg.php';
 
-include ROOT_PATH . '/link/link.db.php';
-include ROOT_PATH . '/link/link.inc.php';
-include ROOT_PATH . '/link/link.pg.php';
+//include ROOT_PATH . '/log/log.db.php';
+include ROOT_PATH . '/log/log.inc.php';
+include ROOT_PATH . '/log/log.pg.php';

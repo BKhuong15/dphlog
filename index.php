@@ -18,33 +18,15 @@ GLOBAL $url;
 $url = new URL();
 $path = $url->getPath();
 
-$registry = array(
-  '/' => 'home',
-  'home' => 'home',
-  'user' => 'userUpsertForm',
-  'users' => 'userListPage',
-  'login' => 'userLoginForm',
-  'unknown' => 'unknown',
-  'logout' => 'userLogout',
-  'links' => 'linkListPage'
-);
-
+// If the path is not defined it is probably a link. Attempt to redirect.
+$registry = getRegistry();
 if (!array_key_exists($path, $registry))
 {
-  $link = getLink($path);
-
-  if ($link)
-  {
-    updateLink($link['code'], $link['visits'] + 1);
-    redirect($link['link']);
-  }
-  else
-  {
-    $path = 'unknown';
-  }
+  $path = 'unknown';
 }
 
-session_name('dphmus');
+// A non-redirect path is found. Open the session and serve.
+session_name('dphlog');
 session_start();
 
 GLOBAL $logged_in_user;
@@ -61,15 +43,34 @@ echo $registry[$path]();
  * Pages.
  *
  ******************************************************************************/
+/**
+ * @return array
+ */
+function getRegistry()
+{
+  $registry = array(
+    '/' => 'home',
+    'home' => 'home',
+    'user' => 'userUpsertForm',
+    'users' => 'userListPage',
+    'login' => 'userLoginForm',
+    'unknown' => 'unknown',
+    'logout' => 'userLogout',
+    'links' => 'linkListPage'
+  );
+
+  return $registry;
+}
+
 function home()
 {
   $template = new HTMLTemplate();
-  $template->setTitle('DPH URL Minify');
-  $template->addCssFilePath('/link/link.css');
-  $template->addJsFilePath('/link/link.js');
+  $template->setTitle('DPH Log');
+  $template->addCssFilePath('/log/log.css');
+  $template->addJsFilePath('/log/log.js');
 
   $template->setMenu(menu());
-  $template->setBody(htmlWrap('h1', 'Welcome to Daniel P Henry\'s URL Minify Site') . linkGenerateForm());
+  $template->setBody(htmlWrap('h1', 'Welcome to Daniel P Henry\'s PHP Error Log Reader') . logView());
 
   return $template;
 }

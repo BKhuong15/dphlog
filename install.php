@@ -13,7 +13,6 @@ if (!file_exists(DB_PATH))
   $db = new SQLite(DB_PATH);
   installUser();
   installSession();
-  installLink();
 }
 
 

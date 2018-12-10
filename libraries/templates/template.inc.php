@@ -88,17 +88,19 @@ Class TableTemplate
   // Primary values.
   protected $header = array();
   protected $rows = array();
-
-  protected $attr = array();
+  protected $table_attrs = array();
+  protected $row_attrs = array();
 
   /**
    * Standard constructor. Pass the path to the template file.
+   *
+   * @param string $id - The html id of the table.
    */
-  public function __construct($id = FALSE)
+  public function __construct($id = '')
   {
     if ($id)
     {
-      $attr['id'] = $id;
+      $this->table_attrs['id'] = $id;
     }
   }
 
@@ -107,19 +109,17 @@ Class TableTemplate
     $this->header = $header;
     return $this;
   }
-  public function addRows($rows)
-  {
-    $this->rows = $rows;
-    return $this;
-  }
+//  public function addRows($rows, $attrs)
+//  {
+//    $this->rows = $rows;
+//    $this->row_attrs = $attrs;
+//    return $this;
+//  }
   public function addRow($row, $attr = array())
   {
     $this->rows[] = $row;
+    $this->row_attrs[] = $attr;
     return $this;
-  }
-  public function setAttr($name, $value)
-  {
-    $this->attr[$name] = $value;
   }
   public function __toString()
   {
@@ -129,7 +129,7 @@ Class TableTemplate
     $output .= $this->generateHTMLHeader();
     $output .= $this->generateHTMLRows();
 
-    $output = htmlWrap('table', $output, $this->attr);
+    $output = htmlWrap('table', $output, $this->table_attrs);
     return $output;
   }
 
@@ -154,17 +154,25 @@ Class TableTemplate
   private function generateHTMLRows()
   {
     $output = '';
+    $count = 0;
+    $row_attr = reset($this->row_attrs);
     foreach ($this->rows as $row)
     {
       $row_output = '';
       $count = 1;
       foreach ($row as $cell)
       {
-        $attr = array('class' => array('column-' . $count));
-        $row_output .= htmlWrap('td', $cell, $attr);
+        $cell_attr = array('class' => array('column-' . $count));
+        $row_output .= htmlWrap('td', $cell, $cell_attr);
         $count++;
       }
-      $output .= htmlWrap('tr', $row_output);
+
+      $class = isset($row_attr['class']) ? $row_attr['class'] : array();
+      assert(is_array($class), 'Class attr must be an array when passed to table template.');
+      $class[] = $count % 2 === 0 ? 'even' : 'odd';
+      $row_attr['class'] = $class;
+      $output .= htmlWrap('tr', $row_output, $row_attr);
+      $row_attr = next($this->row_attrs);
     }
     $output = htmlWrap('tbody', $output);
     return $output;

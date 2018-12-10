@@ -1,18 +1,18 @@
 <?php
 
-class SQLite extends Database
+class MySQL extends Database
 {
   const PLACEHOLDER_TOKEN = ':';
 
-  function __construct($db_path, $username = '', $password = '')
+  function __construct($host, $port, $database, $username = '', $password = '')
   {
     $opt = array(
       PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-      PDO::ATTR_EMULATE_PREPARES   => TRUE,
+      PDO::ATTR_EMULATE_PREPARES   => FALSE,
     );
 
-    $connect_string = 'sqlite:' . $db_path;
+    $connect_string = 'mysql:' . $host . ';dbname=' . $database . ';charset=utf8';
     $this->db = new PDO($connect_string, $username, $password, $opt);
   }
 
@@ -161,6 +161,13 @@ class SQLite extends Database
       assert(self::isValidDataTypes($value['type']), 'Unsupported type');
       $sql .= ' ' . self::structureEscape($name) . ' ' . $value['type'];
 
+      if (strtolower($value['type']) === 'varchar')
+      {
+        assert(is_int($value['length'] || strtolower($value['length']) === 'max'), 'length must be an integer value');
+        $sql .= '(' . $value['length'] . ')';
+      }
+
+//      $sql .= ' ' . self::structureEscape($name) . ' ' . $value['type'];
       foreach ($value['flags'] as $flag)
       {
         if ($flag == 'N')
@@ -173,7 +180,7 @@ class SQLite extends Database
         }
         elseif ($flag == 'A')
         {
-          $sql .= ' AUTOINCREMENT';
+          $sql .= ' AUTO_INCREMENT';
         }
         elseif ($flag == 'U')
         {
@@ -433,19 +440,6 @@ class SQLite extends Database
 
   function structureEscape($string)
   {
-    $string = str_replace('"', '""', $string);
-    return '"' . $string . '"';
-  }
-
-  function isValidDataTypes($type)
-  {
-    $list = array(
-      'integer',
-      'text',
-      'real',
-      'blob',
-    );
-
-    return in_array(strtolower($type), $list);
+    return '`' . $string . '`';
   }
 }

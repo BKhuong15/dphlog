@@ -82,6 +82,7 @@ abstract class Database
   abstract function literal($string);
   abstract function likeEscape($string);
   abstract function structureEscape($string);
+  abstract function isValidDataTypes($type);
 }
 
 /**

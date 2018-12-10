@@ -1,0 +1,27 @@
+
+tr.assert
+{
+  background-color: lightseagreen;
+}
+
+tr.php_fatal_error,
+tr.php_parse_error
+{
+  background-color: lightcoral;
+}
+
+tr.php_warning
+{
+  background-color: lightskyblue;
+}
+
+tr.debug
+{
+  background-color: white;
+}
+
+td.column-3 pre
+{
+  max-height: 100px;
+  overflow-y: scroll;
+}

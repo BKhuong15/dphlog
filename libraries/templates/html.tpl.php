@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Language" content="en">
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon"/>
     <title><?php echo $title ?></title>
     <?php foreach($css_file_paths as $css_file_path): ?>
       <link rel="stylesheet" href="<?php echo $css_file_path?>">
