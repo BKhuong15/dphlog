@@ -3,15 +3,18 @@ function logView()
 {
   $file_handle = fopen(LOG_LOCATION, 'r');
 
+  $line = TRUE;
   $entry = '';
   $count = 0;
   $timestamp = '';
   $matches = array();
   $filtered_entries = array();
-  while (($line = fgets($file_handle)) !== FALSE)
+  while ($line !== FALSE)
   {
+    $line = fgets($file_handle);
+
     // If this is the first line of an entry (identified by the timestamp).
-    if (preg_match('/^\[(\d{2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2}) (.*)\](.*)/', $line, $matches))
+    if ($line === FALSE || preg_match('/^\[(\d{2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2}) (.*)\](.*)/', $line, $matches))
     {
       // First item in the log.
       if ($count === 0)
@@ -50,15 +53,19 @@ function logView()
 
       // Limit results to the last 100 entries.
       array_unshift($filtered_entries, $row);
-//      array_push($last_100, $row);
       if ($count > 100)
       {
-//        break;
         array_pop($filtered_entries);
       }
       else
       {
         $count++;
+      }
+
+      // If this was the last line bail.
+      if ($line === FALSE)
+      {
+        break;
       }
 
       // Start a new entry.
