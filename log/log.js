@@ -10,16 +10,16 @@ $(document).ready(function()
   //  //$('this').css('height', 'auto');
   //});
 
-  $('#log_table').on('click', '.column-3 pre', function()
+  $('#log_table').on('click', 'input.expand', function()
   {
-    console.log($(this).css('max-height'));
-    if ($(this).css('max-height') == '100px')
+    var $content = $(this).parents('tr').find('td.column-4 pre');
+    if ($content.css('max-height') == '100px')
     {
-      $(this).css('max-height', '100%');
+      $content.css('max-height', '100%');
     }
     else
     {
-      $(this).css('max-height', '100px');
+      $content.css('max-height', '100px');
     }
   });
 });

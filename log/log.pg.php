@@ -48,6 +48,7 @@ function logView()
       $row = array(
         $type,
         $timestamp,
+        htmlSolo('input', array('type' => 'button', 'value' => 'expand', 'class' => array('expand'))),
         '<pre>' . $entry . '</pre>',
       );
 
