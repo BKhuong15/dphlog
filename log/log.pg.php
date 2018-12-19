@@ -49,7 +49,7 @@ function logView()
         $type,
         $timestamp,
         htmlSolo('input', array('type' => 'button', 'value' => 'expand', 'class' => array('expand'))),
-        '<pre>' . $entry . '</pre>',
+        '<pre>' . sanitize($entry) . '</pre>',
       );
 
       // Limit results to the last 100 entries.
