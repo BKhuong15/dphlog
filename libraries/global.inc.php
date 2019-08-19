@@ -313,6 +313,12 @@ function strLeft($s1, $s2)
  * Other Helpers
  *
  ******************************************************************************/
+
+/**
+ * @param int $length
+ *
+ * @return string
+ */
 function generateRandomString($length = 32)
 {
   return base64_encode(openssl_random_pseudo_bytes($length));
@@ -366,21 +372,21 @@ function sanitize($data)
 function dewordify($string)
 {
   $search = [                 // www.fileformat.info/info/unicode/<NUM>/ <NUM> = 2018
-    "\xC2\xAB",     // ´ (U+00AB) in UTF-8
-    "\xC2\xBB",     // ª (U+00BB) in UTF-8
-    "\xE2\x80\x98", // ë (U+2018) in UTF-8
-    "\xE2\x80\x99", // í (U+2019) in UTF-8
-    "\xE2\x80\x9A", // Ç (U+201A) in UTF-8
+    "\xC2\xAB",     // ¬´ (U+00AB) in UTF-8
+    "\xC2\xBB",     // ¬ª (U+00BB) in UTF-8
+    "\xE2\x80\x98", // ‚Äò (U+2018) in UTF-8
+    "\xE2\x80\x99", // ‚Äô (U+2019) in UTF-8
+    "\xE2\x80\x9A", // ‚Äö (U+201A) in UTF-8
     "\xE2\x80\x9B", // ? (U+201B) in UTF-8
-    "\xE2\x80\x9C", // ì (U+201C) in UTF-8
-    "\xE2\x80\x9D", // î (U+201D) in UTF-8
-    "\xE2\x80\x9E", // Ñ (U+201E) in UTF-8
+    "\xE2\x80\x9C", // ‚Äú (U+201C) in UTF-8
+    "\xE2\x80\x9D", // ‚Äù (U+201D) in UTF-8
+    "\xE2\x80\x9E", // ‚Äû (U+201E) in UTF-8
     "\xE2\x80\x9F", // ? (U+201F) in UTF-8
-    "\xE2\x80\xB9", // ã (U+2039) in UTF-8
-    "\xE2\x80\xBA", // õ (U+203A) in UTF-8
-    "\xE2\x80\x93", // ñ (U+2013) in UTF-8
-    "\xE2\x80\x94", // ó (U+2014) in UTF-8
-    "\xE2\x80\xA6", // Ö (U+2026) in UTF-8
+    "\xE2\x80\xB9", // ‚Äπ (U+2039) in UTF-8
+    "\xE2\x80\xBA", // ‚Ä∫ (U+203A) in UTF-8
+    "\xE2\x80\x93", // ‚Äì (U+2013) in UTF-8
+    "\xE2\x80\x94", // ‚Äî (U+2014) in UTF-8
+    "\xE2\x80\xA6", // ‚Ä¶ (U+2026) in UTF-8
   ];
 
   $replacements = [

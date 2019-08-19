@@ -48,3 +48,5 @@ include ROOT_PATH . '/libraries/user/user.pg.php';
 //include ROOT_PATH . '/log/log.db.php';
 include ROOT_PATH . '/log/log.inc.php';
 include ROOT_PATH . '/log/log.pg.php';
+
+include ROOT_PATH . '/json_formatter/json_formatter.pg.php';

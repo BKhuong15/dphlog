@@ -56,7 +56,8 @@ function getRegistry()
     'login' => 'userLoginForm',
     'unknown' => 'unknown',
     'logout' => 'userLogout',
-    'links' => 'linkListPage'
+    'links' => 'linkListPage',
+    'json-formatter' => 'jsonFormatterPage',
   );
 
   return $registry;
@@ -90,14 +91,14 @@ function menu()
 {
   $output = '';
 
-  // Users
+  // Home/Log
   $output .= htmlWrap('a', 'Home', array('href' => '/home'));
 
   // Users
   $output .= htmlWrap('a', 'Users', array('href' => '/users'));
 
-  // Links.
-  $output .= htmlWrap('a', 'Links', array('href' => '/links'));
+  // JSON formatter.
+  $output .= htmlWrap('a', 'JSON Formatter', array('href' => '/json-formatter'));
 
   // Username.
   GLOBAL $logged_in_user;
