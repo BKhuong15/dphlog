@@ -417,7 +417,7 @@ function sanitizeFileName($name)
 }
 
 // Heavily borrowed from Drupal 7.
-function sanitizeXss($string, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'code', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'span', 'h1', 'br'))
+function sanitizeXss($string, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'code', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br'))
 {
   // Store the text format.
   _sanitizeXssHelper($allowed_tags, TRUE);
