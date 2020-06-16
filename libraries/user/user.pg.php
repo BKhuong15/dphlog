@@ -22,7 +22,7 @@ function userLoginForm()
   $template->setTitle('Login');
 
   $form = new Form('user_login_form');
-  $form->setTitle('Please login to continue.');
+  $form->setTitle('Please login to continue to dphlog.');
 
   $field = new FieldText('username', 'Username');
   $form->addField($field);

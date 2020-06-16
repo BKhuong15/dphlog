@@ -7,6 +7,7 @@
 body {
   font-size: 14px;
   margin: 0;
+  background-color: gray;
 }
 
 /* line 14, ../scss/page.scss */
@@ -22,7 +23,7 @@ h1.debug {
 /* line 25, ../scss/page.scss */
 a {
   text-decoration: none;
-  color: blue;
+  color: #3700B3;
 }
 
 /* line 31, ../scss/page.scss */
@@ -43,7 +44,7 @@ table th, table td {
 /* line 48, ../scss/page.scss */
 #menu {
   width: 100%;
-  background-color: #FFE3AA;
+  background-color: #BB86FC;
   font-size: 18px;
 }
 /* line 55, ../scss/page.scss */
@@ -55,7 +56,7 @@ table th, table td {
 #menu ul {
   display: none;
   position: absolute;
-  background-color: #FFE3AA;
+  background-color: #BB86FC;
   margin: 0;
   padding: 5px;
 }

@@ -1,3 +1,14 @@
+body
+{
+  background-color: gray;
+}
+
+tr
+{
+  color: #EEE;
+  font-size: 16px;
+  font-weight: 600;
+}
 
 tr.assert
 {
@@ -17,7 +28,7 @@ tr.php_warning
 
 tr.debug
 {
-  background-color: white;
+  background-color: gray;
 }
 
 td.column-1,
@@ -31,4 +42,9 @@ td.column-4 pre
 {
   max-height: 100px;
   overflow-y: scroll;
+}
+
+input
+{
+  background-color: #BB86FC;
 }

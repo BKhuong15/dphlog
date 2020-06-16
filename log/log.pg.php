@@ -22,7 +22,7 @@ function logView()
     $line = fgets($file_handle);
 
     // If this is the first line of an entry (identified by the timestamp).
-    if ($line === FALSE || preg_match('/^\[(\d{2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2})( America\/Denver])(.*)/', $line, $matches))
+    if ($line === FALSE || preg_match('/^\[(\d{2}-\w{3}-\d{4} \d{2}:\d{2}:\d{2})( America\/[a-zA-Z_]*])(.*)/', $line, $matches))
     {
       // First item in the log.
       if ($count === 0)

@@ -49,15 +49,14 @@ echo $registry[$path]();
 function getRegistry()
 {
   $registry = array(
-    '/' => 'home',
-    'home' => 'home',
-    'user' => 'userUpsertForm',
-    'users' => 'userListPage',
-    'login' => 'userLoginForm',
-    'unknown' => 'unknown',
-    'logout' => 'userLogout',
-    'links' => 'linkListPage',
-    'json-formatter' => 'jsonFormatterPage',
+    '/' => 'home', /** @uses home() */
+    'home' => 'home', /** @uses home() */
+    'user' => 'userUpsertForm', /** @uses userUpsertForm() */
+    'users' => 'userListPage', /** @uses userListPage() */
+    'login' => 'userLoginForm', /** @uses userLoginForm() */
+    'unknown' => 'unknown', /** @uses unknown() */
+    'logout' => 'userLogout', /** @uses userLogout */
+    'json-formatter' => 'jsonFormatterPage', /** @uses jsonFormatterPage() */
   );
 
   return $registry;
