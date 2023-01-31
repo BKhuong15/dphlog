@@ -4,7 +4,6 @@ function phpUnserializePage()
   $template = new HTMLTemplate();
   $template->setTitle('DPH Log');
   $template->addCssFilePath('/php_unserialize/php_unserialize.css');
-  $template->addJsFilePath('/php_unserialize/php_unserialize.js');
 
   $template->setMenu(menu());
 

@@ -57,6 +57,7 @@ function getRegistry()
     'unknown' => 'unknown', /** @uses unknown() */
     'logout' => 'userLogout', /** @uses userLogout */
     'json-formatter' => 'jsonFormatterPage', /** @uses jsonFormatterPage() */
+    'php-unserialize' => 'phpUnserializePage' /** @uses phpUnserializePage() */
   );
 
   return $registry;
