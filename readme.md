@@ -9,5 +9,4 @@ A simple PHP error log navigator.
 4. Visit the host with the path '/install.php'.
 5. After being redirected login with "admin", "admin". Change your password after first login by selecting "admin" at the top right of the menu.
 6. Return to "home" by selecting the "home" link in the menu at the top.
-7. Paste the url that should be minified into the form and submit.
-8. Use the "copy link" button to copy the minified URL to the clipboard.
+
