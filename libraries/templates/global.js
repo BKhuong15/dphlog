@@ -51,7 +51,67 @@ $(document).ready(function()
       }, 400);
     }
   }
+
+  $('.field.date input').once().each(function()
+  {
+    $(this).datepicker(
+      {
+        'changeMonth' : $(this).attr('change_month') === "1",
+        'changeYear' : $(this).attr('change_year') === "1",
+        'yearRange' : $(this).attr('min_year') + ':' + $(this).attr('max_year'),
+        'onChangeMonthYear' : dateChangeMonthYear,
+        showOtherMonths: true,
+        selectOtherMonths: true
+      }).mask("99/99/9999", {placeholder:" "});
+  });
+
+  $('.field.time input').once().each(function()
+  {
+    function restoreFocus()
+    {
+      $(this).focus();
+    }
+    $(this).timepicker(
+      {
+        'step': $(this).attr('step'),
+        'onSelect': restoreFocus,
+        'timeFormat' : "h:i a",
+      }).mask("b9:t9 pm", {placeholder:" "});
+  });
+
 });
+
+
+$.fn.once = function(processed_class)
+{
+  if (typeof processed_class == 'undefined')
+  {
+    processed_class = 'processed';
+  }
+  return this.not('.' + processed_class).addClass(processed_class);
+};
+
+function dateChangeMonthYear(year, month)
+{
+  let date = $(this).val();
+  let date_pieces = date.split('/');
+  date_pieces[0] = addZero(month);
+  date_pieces[1] = date_pieces[1] ? date_pieces[1] : "01";
+  date_pieces[2] = addZero(year);
+  date = date_pieces.join('/');
+  $(this).val(date);
+  return false;
+}
+
+function addZero(i)
+{
+  if (i < 10)
+  {
+    i = '0' + i;
+  }
+
+  return i;
+}
 
 function modalShow($content)
 {

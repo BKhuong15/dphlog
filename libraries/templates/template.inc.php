@@ -22,8 +22,13 @@ class HTMLTemplate
   function __construct()
   {
     $this->addCssFilePath('/libraries/templates/page.css');
+    $this->addCssFilePath('/libraries/external/jquery_time_picker/timepicker.css');
+    $this->addCssFilePath('https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css');
     $this->addCssFilePath('/libraries/templates/form.css');
     $this->addJsFilePath('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js');
+    $this->addJsFilePath('https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js');
+    $this->addJsFilePath('/libraries/external/input_mask.js');
+    $this->addJsFilePath('/libraries/external/jquery_time_picker/timepicker.js');
     $this->addJsFilePath('/libraries/templates/global.js');
   }
 
