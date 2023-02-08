@@ -51,3 +51,6 @@ include ROOT_PATH . '/log/log.pg.php';
 
 include ROOT_PATH . '/json_formatter/json_formatter.pg.php';
 include ROOT_PATH . '/php_unserialize/php_unserialize.pg.php';
+
+//load file
+include ROOT_PATH . '/time/time.pg.php';
