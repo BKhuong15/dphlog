@@ -1,24 +1,26 @@
 <?php
+/**
+ * @return HTMLTemplate
+ */
 function timezonePage()
 {
-    //setup file, use template and add file paths
+
+    // Template.
     $template = new HTMLTemplate();
     $template->setTitle('Epoch Converter');
     $template->addCssFilePath('/time/time.css');
     $template->addJsFilePath('/time/time.js');
     $template->setMenu(menu());
 
-    $body = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
+    // Top clock.
+    $output = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
+  $output .= htmlWrap("div", "1234567890", array('class' => array('unix-time')));
+  $output = htmlWrap('div', $output, array('class' => array('date-and-epoch')));
 
-    $myEpochTime = htmlWrap("div", "1234567890", array('class' => array('unix-time')));
-
-    $baseTimeWrap = htmlWrap('div', $body . $myEpochTime, array('class' => array('date-and-epoch')));
-
-    //create new form
+  /******************
+   * Form.
+   ******************/
     $form = new Form('time_converter');
-
-    $group = 'top_group';
-    $form->addGroup($group);
 
     //date select field
     $field = new FieldDate('date', 'Date');
@@ -45,7 +47,13 @@ function timezonePage()
     $field->setValue('America/New_York');
     $form->addField($field);
 
-    //convert times button
+  /******************
+   * to group.
+   ******************/
+  $group = 'top_group';
+  $form->addGroup($group);
+
+  //convert times button
     $field = new FieldSubmit('convert-button', 'Convert');
     $field->setGroup($group);
     $form->addField($field);
@@ -57,6 +65,9 @@ function timezonePage()
 
     $formSection = htmlWrap('div', $form, array('class' => array('formSection')));
 
+  /***********************
+   * Clock stuff.
+   ***********************/
     $fullClockHTMLWrap = '';
 
     //create each clock based on the given dictionary of timezones
@@ -75,7 +86,7 @@ function timezonePage()
     return $template;
 }
 
-/*
+/**
  * @param $ianaTimeZoneName: string containing iana time zone in this format "America/Chicago"
  * @param $abbreviatedTimeZoneName: string containing the abbreviated version, "central"
  * @return string: wrapped html string containing a completed clock based on the timezone given
@@ -110,7 +121,8 @@ function createClock($ianaTimeZoneName, $abbreviatedTimeZoneName)
     return htmlWrap("div", $output, $attr);
 }
 
-function getCurrentTime() {
+function getCurrentTime()
+{
   $time = time();
   return array('time' => $time);
 }
