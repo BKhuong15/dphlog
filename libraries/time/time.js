@@ -10,7 +10,6 @@ $(document).ready(function()
 
     let $form = $('#time_converter');
 
-    getCurrentTimeAjax();
 
     //button to stop time and convert to inputted time
     $form.find('.convert-button input').click(function(e)
@@ -41,6 +40,8 @@ $(document).ready(function()
         $(".current-timezone").removeClass("current-timezone");
         $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
         main_interval = setInterval(start, ONE_SECOND);
+        getCurrentTimeAjax();
+
     }).click();
 });
 
@@ -180,12 +181,11 @@ function parseDateTimeInputData(time, date)
 function getCurrentTimeAjax()
 {
     $.ajax({
-        type: "POST",
-        url: "http://log.local/time-tool",
-        data: {functionName: 'getCurrentTime'},
+        type: "GET",
+        url: "/ajax/time",
         dataType: "json",
         success: function(response) {
-            console.log("time retrieved from php: " + response.time);
+            console.log("time retrieved from php: " + response['data']);
         },
         error: function(xhr, status, error) {
             console.log("Ajax function error");

@@ -202,5 +202,5 @@ h1
 .clock-wrap.current-timezone
 {
     border: 2px solid red;
-
+    padding: 8px;
 }

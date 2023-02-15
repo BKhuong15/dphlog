@@ -506,3 +506,22 @@ function _sanitizeXssHelper($m, $store = FALSE) {
 
   return "<$elem$attr2$xhtml_slash>";
 }
+
+/**
+ * @param array $list
+ * @param bool|string|int $key
+ * @return mixed
+ */
+function getListItem($list, $key, $default = FALSE)
+{
+  assert(is_array($list) || empty($list), 'Non-array passed to getListItem function.');
+  if ($key === FALSE)
+  {
+    return $list;
+  }
+  elseif (!isset($list[$key]))
+  {
+    return $default;
+  }
+  return $list[$key];
+}
