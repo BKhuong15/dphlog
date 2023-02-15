@@ -341,6 +341,7 @@ function toMachine($string)
 {
   $string = str_replace(' ', '_', $string);
   $string = strtolower($string);
+  $string = preg_replace('/[^A-Za-z0-9_-]/', '_',$string);
   return $string;
 }
 

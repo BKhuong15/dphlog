@@ -8,89 +8,109 @@ function timezonePage()
     $template->addJsFilePath('/time/time.js');
     $template->setMenu(menu());
 
-//  $code_snippet = htmlWrap('script', $js);
-    $now = new DateTime();
-    $pretty = $now->format('m/d/Y h:i a e');
-    $body = '';
-//    $body .= htmlWrap('h1', 'It is time!');
-    $body .= htmlWrap('div', "", array('class' => array('human-time')));
-    //$body .= htmlWrap('div', time(), array('class' => array('unix-time')));
+    $body = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
 
-    $myEpochTime = htmlWrap("div", "", array('class' => array('unix-time')));
+    $myEpochTime = htmlWrap("div", "1234567890", array('class' => array('unix-time')));
 
-    $timeZones = "";
-    $timeZones .= htmlWrap("li", "", array('class' => array('eastern')));
-    $timeZones .= htmlWrap("li", "", array('class' => array('central')));
-    $timeZones .= htmlWrap("li", "", array('class' => array('mountain')));
-    $timeZones .= htmlWrap("li", "", array('class' => array('pacific')));
-    $timeZones .= htmlWrap("li", "", array('class' => array('alaska')));
-    $timeZones .= htmlWrap("li", "", array('class' => array('hawaii')));
-    $timeZones .= htmlWrap("ul", "", array('class' => array('timeZoneList')));
+    $baseTimeWrap = htmlWrap('div', $body . $myEpochTime, array('class' => array('date-and-epoch')));
 
     //create new form
-    $form = new Form('json_formatter');
+    $form = new Form('time_converter');
 
     $group = 'top_group';
     $form->addGroup($group);
 
     //date select field
     $field = new FieldDate('date', 'Date');
-//  $field->setValue('01/08/2023');
     $form->addField($field);
 
     //time select dropdown field
     $field = new FieldTime('time', 'Datetime');
-//  $field->setValue('01/08/2023');
     $form->addField($field);
 
+    //dict of iana timezones -> general zone, matches with one in js file
     $list = array(
         'America/New_York' => 'Eastern',
         'America/Chicago' => 'Central',
         'America/Denver' => 'Mountain',
-        'America/Phoenix' => 'Mountain (Arizona)',
+        //'America/Phoenix' => 'Mountain (Arizona)',
         'America/Los_Angeles' => 'Pacific',
         'America/Anchorage' => 'Alaska',
         'America/Adak' => 'Hawaii',
-        'Pacific/Honolulu' => 'Hawaii (No Daylight Savings)',
+        //'Pacific/Honolulu' => 'Hawaii (No Daylight Savings)',
     );
 
+    //select timezone form button
     $field = new FieldSelect('timezone', 'Timezone', $list);
-    $field->setValue('America/Chicago');
+    $field->setValue('America/New_York');
     $form->addField($field);
-//    $formSection = htmlWrap('div', $form, array('class' => array('formSection')));
 
-    $fullClockHTMLWrap = createClock('eastern_standard', 'EST') . createClock('central', 'cst');
+    //convert times button
+    $field = new FieldSubmit('convert-button', 'Convert');
+    $field->setGroup($group);
+    $form->addField($field);
 
+    //reset times to user's current time button
+    $field = new FieldSubmit('now-button', 'Now');
+    $field->setGroup($group);
+    $form->addField($field);
 
-    $clockSection = htmlWrap('ul', $fullClockHTMLWrap, array('class' => array('clockSection')));
+    $formSection = htmlWrap('div', $form, array('class' => array('formSection')));
 
-    //$body = htmlWrap('p','test .php file html wrap ' . time() . ' ' . $pretty);
+    $fullClockHTMLWrap = '';
+
+    //create each clock based on the given dictionary of timezones
+    foreach ($list as $key => $value)
+    {
+      $fullClockHTMLWrap .= createClock($key, $value);
+    }
+
+    $clockSection = htmlWrap('div', $fullClockHTMLWrap, array('class' => array('clockSection')));
+    $clockContainter = htmlWrap('div', $clockSection, array('class' => array('clock-container')));
+
     $header = 'Epoch Converter';
-    $template->setBody(htmlWrap('h1', $header) . $body . $myEpochTime . $timeZones . $form . $clockSection);
+
+    $clearFix = htmlWrap('div', 'clearfix', array('class' => array('clearfix')));
+    $template->setBody(htmlWrap('h1', $header) . $baseTimeWrap . $formSection . $clockContainter . $clearFix);
     return $template;
 }
 
-function createClock($timezone, $timezoneLabel)
+/*
+ * @param $ianaTimeZoneName: string containing iana time zone in this format "America/Chicago"
+ * @param $abbreviatedTimeZoneName: string containing the abbreviated version, "central"
+ * @return string: wrapped html string containing a completed clock based on the timezone given
+ */
+function createClock($ianaTimeZoneName, $abbreviatedTimeZoneName)
 {
-    //clock face
-    $labelWrap = htmlWrap('h2', $timezoneLabel, array('class' => array('timezone-header')));
+    $output = '';
+    $output .= htmlWrap('h2', $abbreviatedTimeZoneName, array('class' => array('header')));
 
-    $face = htmlWrap('div',NULL, array('class' => array('marking marking-one')));
-    $face .= htmlWrap('div',NULL, array('class' => array('marking marking-two')));
-    $face .= htmlWrap('div',NULL, array('class' => array('marking marking-three')));
-    $face .= htmlWrap('div',NULL, array('class' => array('marking marking-four')));
+    $face = htmlWrap('div', null, array('class' => array('marking marking-one')));
+    $face .= htmlWrap('div', null, array('class' => array('marking marking-two')));
+    $face .= htmlWrap('div', null, array('class' => array('marking marking-three')));
+    $face .= htmlWrap('div', null, array('class' => array('marking marking-four')));
 
     $face = htmlWrap('div', $face, array('class' => array('outer-clock-face')));
 
     //clock hands
-    $hands = htmlWrap('div', NULL, array('class' => array('hand hour-hand')));
-    $hands .= htmlWrap('div', NULL, array('class' => array('hand min-hand')));
-    $hands .= htmlWrap('div', NULL, array('class' => array('hand second-hand')));
+    $hands = htmlWrap('div', null, array('class' => array('hand hour-hand')));
+    $hands .= htmlWrap('div', null, array('class' => array('hand min-hand')));
+    $hands .= htmlWrap('div', null, array('class' => array('hand second-hand')));
     $innerFace = htmlWrap('div', $hands, array('class' => array('inner-clock-face')));
 
-    $fullClockHTMLWrap = $labelWrap . htmlWrap('div',  $face . $innerFace, array('id' => array('timezone_' . $timezone), 'class' => array('clock')));
+    $output .=  htmlWrap('div', $face . $innerFace, array('class' => array('clock')));
 
-    //$fullClockHTMLWrap .= htmlWrap("li",$fullClockHTMLWrap, Null);
+    $output .= htmlWrap("div", '01:00:00 PM', array('class' => array('time')));
+    $output .= htmlWrap("div", $ianaTimeZoneName, array('class' => array('timezone')));
 
-    return $fullClockHTMLWrap;
+    $attr = array(
+      'id' => array(toMachine($ianaTimeZoneName)),
+      'class' => array('clock-wrap')
+    );
+    return htmlWrap("div", $output, $attr);
+}
+
+function getCurrentTime() {
+  $time = time();
+  return array('time' => $time);
 }
