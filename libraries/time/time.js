@@ -9,6 +9,7 @@ $(document).ready(function()
     var ONE_SECOND = 1000;
 
     let $form = $('#time_converter');
+    let $rightForm = $('.right-form');
 
 
     //button to stop time and convert to inputted time
@@ -20,6 +21,7 @@ $(document).ready(function()
         state = 'then';
         start();
 
+
         let timezoneValue = $form.find('.field.timezone select').val();
 
         //remove red border from everything, then add it to desired conversion clock
@@ -28,7 +30,7 @@ $(document).ready(function()
     });
 
     //button to restart clock timers, upon page load, click button to start clocks
-    $form.find('.now-button input').click(function(e)
+    $rightForm.find('.now-button input').click(function(e)
     {
         e.preventDefault();
         state = 'now';
@@ -61,6 +63,8 @@ function start()
         let $form = $('#time_converter');
         let timeValue = $form.find('input[name="time"]').val();
         let dateValue = $form.find('input[name="date"]').val();
+
+        let timestamp = $form.find('input[name="timestamp"]').val();
 
         datetime = parseDateTimeInputData(timeValue, dateValue);
     }

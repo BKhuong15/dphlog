@@ -4,6 +4,10 @@ function timeForm()
 {
   $form = new Form('time_converter');
 
+  //timestamp
+  $field = new FieldText("timestamp", "Timestamp");
+  $form->addField($field);
+
   // Date.
   $field = new FieldDate('date', 'Date');
   $form->addField($field);
@@ -18,21 +22,11 @@ function timeForm()
   $field->setValue('America/New_York');
   $form->addField($field);
 
-  /******************
-   * To group.
-   ******************/
-  $group = 'top_group';
-  $form->addGroup($group);
 
   // Convert button.
   $field = new FieldSubmit('convert-button', 'Convert');
-  $field->setGroup($group);
   $form->addField($field);
 
-  // Now button.
-  $field = new FieldSubmit('now-button', 'Now');
-  $field->setGroup($group);
-  $form->addField($field);
 
   /******************
    * Handlers.

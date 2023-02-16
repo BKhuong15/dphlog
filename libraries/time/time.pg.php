@@ -14,13 +14,22 @@ function timePage()
   // Header.
   $header = htmlWrap('h1', 'Epoch Converter');
 
-  // Top clock.
-  $output = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
-  $output .= htmlWrap("div", "1234567890", array('class' => array('unix-time')));
-  $output = htmlWrap('div', $output, array('class' => array('date-and-epoch')));
+  $output = '';
 
   // Form.
   $output .= htmlWrap('div', timeForm(), array('class' => array('formSection')));
+
+  // Top clock.
+  $topClock = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
+  $topClock .= htmlWrap("div", "1234567890", array('class' => array('unix-time')));
+  $output .= htmlWrap('div', $topClock, array('class' => array('date-and-epoch')));
+
+  //Reset/Now button.
+  $nowButton = new FieldSubmit('now-button', 'Now');
+  $output .= htmlWrap('div', $nowButton, array('class' => array('right-form')));
+
+  //Wrap Clock, Form, and Now button.
+  $output = htmlWrap('div', $output, array('class' => array('top-section')));
 
   // Clocks.
   $clocks = '';
@@ -40,7 +49,7 @@ function timePage()
 function timeAjax()
 {
   $response = array(
-    'status' => TRUE,
+    'status' => true,
     'data' => time(),
   );
   die(json_encode($response));
