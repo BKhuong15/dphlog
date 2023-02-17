@@ -10,10 +10,12 @@ function timeForm()
 
   // Date.
   $field = new FieldDate('date', 'Date');
+  $field->setValue('02/01/2023');
   $form->addField($field);
 
   // Time
   $field = new FieldTime('time', 'Time');
+  //$field->setValue('2:00 PM');
   $form->addField($field);
 
   // Timezone
