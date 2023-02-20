@@ -1,3 +1,4 @@
+
 /**
  * Created by Austin 2/6/2023
  */
@@ -5,7 +6,8 @@ var state = 'now';
 var main_interval;
 $(document).ready(function()
 {
-    var ONE_SECOND = 1000;
+    const ONE_SECOND = 1000;
+    const ONE_MINUTE = 60000;
 
     let $form = $('#time_converter');
     let $rightForm = $('.right-form');
@@ -27,22 +29,50 @@ $(document).ready(function()
         $('.clock-wrap#' + machineName(timezoneValue)).addClass('current-timezone');
     });
 
-    //Button to restart clock timers, upon page load, click button to start clocks.
-    $rightForm.find('.now-button input').click(function(e)
+    // //Button to restart clock timers, upon page load, click button to start clocks.
+    // $rightForm.find('.now-button input').click(function(e)
+    // {
+    //     //prevent default behavior from function (in this case its reload the page when submit is pressed)
+    //     e.preventDefault();
+    //     state = 'now';
+    //     start();
+    //
+    //     let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
+    //
+    //     //Add red border to the local timezone clock.
+    //     $(".current-timezone").removeClass("current-timezone");
+    //     $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
+    //     main_interval = setInterval(start, ONE_SECOND);
+    //
+    //     //getCurrentTimeAjax();
+    //
+    // }).click();
+
+    $rightForm.find('.now-button-ajax input').click(function(e)
     {
         e.preventDefault();
         state = 'now';
-        start();
+
+        getCurrentTimeAjax();
+
+        //clear left form
+        $form.find('input[name="timestamp"]').val('');
+        $form.find('input[name="time"]').val('');
+        $form.find('input[name="date"]').val('');
+        $form.find('select[name="timezone"]').val('');
 
         let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-
         //Add red border to the local timezone clock.
         $(".current-timezone").removeClass("current-timezone");
         $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
         main_interval = setInterval(start, ONE_SECOND);
-        getCurrentTimeAjax();
 
+        main_interval = setInterval(getCurrentTimeAjax, ONE_SECOND);
     }).click();
+
+    //Verify user local time is equal to the server time in epoch time
+    setInterval(verifyCurrentTime, ONE_MINUTE);
+
 });
 
 function start()
@@ -105,7 +135,6 @@ function start()
 
     //Get # of miliseconds since jan 1, 1970 and divide by 1000 to get seconds.
     $('.unix-time').html(epoch);
-
 
     //Update display time and clock hands for each timezone.
     for (let key in zoneDict)
@@ -208,6 +237,47 @@ function parseDateTimeInputData(time, date, timezone)
     return datetime;
 }
 
+function returnCurrentTimeBasedOnAjax(serverEpoch)
+{
+    let options =
+      {
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric'
+      };
+
+    var date = new Date(serverEpoch * 1000);
+    let date_time_format = new Intl.DateTimeFormat('en-US', options).format(date);
+    // console.log(serverEpoch);
+    // console.log(date_time_format);
+    // console.log(date);
+
+    //Full dictionary of iana timezones => general zone. matches with dict in php file.
+    const zoneDict =
+      {
+          'America/New_York': 'Eastern',
+          'America/Chicago': 'Central',
+          'America/Denver': 'Mountain',
+          //'America/Phoenix': 'Mountain (Arizona)',
+          'America/Los_Angeles': 'Pacific',
+          'America/Anchorage': 'Alaska',
+          'America/Adak': 'Hawaii',
+          //'Pacific/Honolulu': 'Hawaii (No Daylight Savings)'
+      };
+
+    //Create datetimeformat object based on user's machine's current time.
+    $('.current-date').html(date_time_format);
+
+    //Get # of miliseconds since jan 1, 1970 and divide by 1000 to get seconds.
+    $('.unix-time').html(serverEpoch);
+
+    //Update display time and clock hands for each timezone.
+    for (let key in zoneDict)
+    {
+        startClockHands(date, key);
+    }
+}
+
 function getCurrentTimeAjax()
 {
     $.ajax({
@@ -215,9 +285,40 @@ function getCurrentTimeAjax()
         url: "/ajax/time",
         dataType: "json",
         success: function(response) {
-            console.log("time retrieved from php: " + response['data']);
+            // console.log("time retrieved from ajax: " + response['currentServerTime']);
+            // //default time zone is mountain time
+            // console.log("local timezone retrieved from ajax: " + response['localTimezone']);
+            returnCurrentTimeBasedOnAjax(response['currentServerTime']);
+
         },
         error: function(xhr, status, error) {
+            console.log("Ajax function error");
+            console.log(error);
+        }
+    });
+}
+
+function verifyCurrentTime()
+{
+    $.ajax({
+        type: "GET",
+        url: "/ajax/time",
+        dataType: "json",
+        success: function(response)
+        {
+            //Get user's local time, convert to seconds, then round down/
+            let localTime = new Date().getTime() / 1000;
+            localTime = Math.floor(localTime);
+
+            if(localTime !== response['currentServerTime'])
+            {
+                console.log("Warning! User local time and server time are not equal.");
+                console.log("User time: " + localTime);
+                console.log("Server time: " + response['currentServerTime']) ;
+            }
+        },
+        error: function(xhr, status, error)
+        {
             console.log("Ajax function error");
             console.log(error);
         }

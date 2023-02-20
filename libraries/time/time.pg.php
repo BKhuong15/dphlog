@@ -25,8 +25,9 @@ function timePage()
   $output .= htmlWrap('div', $topClock, array('class' => array('date-and-epoch')));
 
   //Reset/Now button.
-  $nowButton = new FieldSubmit('now-button', 'Now');
-  $output .= htmlWrap('div', $nowButton, array('class' => array('right-form')));
+//  $nowButton = new FieldSubmit('now-button', 'Now');
+  $nowButtonAjax = new FieldSubmit('now-button-ajax', 'Now (Ajax)');
+  $output .= htmlWrap('div', $nowButtonAjax, array('class' => array('right-form')));
 
   //Wrap Clock, Form, and Now button.
   $output = htmlWrap('div', $output, array('class' => array('top-section')));
@@ -50,7 +51,8 @@ function timeAjax()
 {
   $response = array(
     'status' => true,
-    'data' => time(),
+    'currentServerTime' => time(),
+    'localTimezone' => date_default_timezone_get(),
   );
   die(json_encode($response));
 }

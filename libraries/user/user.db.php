@@ -9,6 +9,7 @@ function installUser()
   $query->addField('email', 'TEXT', 128, array('U', 'N'));
   $query->addField('username', 'TEXT', 64, array('U', 'N'));
   $query->addField('password', 'TEXT', 256, array('N'));
+  $query->addField('timezone', 'TEXT', 256);
   $query->addField('reset_code', 'TEXT', 256);
   $query->addField('reset_timestamp', 'INTEGER', 0);
 
