@@ -40,7 +40,7 @@ function timeForm()
  * @param string $timezone: string containing iana time zone in this format "America/Chicago"
  * @return string: wrapped html string containing a completed clock based on the timezone given
  */
-function timeClock($timezone)
+function timeClock($timezone, $usersInZone)
 {
   $output = '';
   $output .= htmlWrap('h2', getTimeTimezoneList($timezone), array('class' => array('header')));
@@ -63,6 +63,19 @@ function timeClock($timezone)
   $output .= htmlWrap("div", '01:00:00 PM', array('class' => array('time')));
   $output .= htmlWrap("div", $timezone, array('class' => array('timezone')));
 
+  $userList = '';
+  if (is_null($usersInZone)) {
+    $userList .= htmlWrap('li', 'None', array('class' => array('user')));
+  }
+  else {
+    foreach ($usersInZone as $user) {
+      $userList .= htmlWrap('li', $user, array('class' => array('user')));
+    }
+  }
+
+  $output .= htmlWrap('ul', $userList, array('class' => array('user-list')));
+
+
   $attr = array(
     'id' => array(toMachine($timezone)),
     'class' => array('clock-wrap')
@@ -83,4 +96,28 @@ function getTimeTimezoneList($key = FALSE)
     //'Pacific/Honolulu' => 'Hawaii (No Daylight Savings)',
   );
   return getListItem($list, $key);
+}
+
+function sortUsers()
+{
+  /*************************
+   * User timezone sorting
+   *************************/
+  $users = getUserList();
+
+  $userHashMap = array();
+
+  foreach($users as $user)
+  {
+    $currUser = $user['username'];
+    $currTimezone = $user['timezone'];
+
+    // If the current timezone key does not exist in the hashmap yet, add it
+    if(!array_key_exists($currTimezone, $userHashMap)){
+      $userHashMap[$currTimezone] = array();
+    }
+    // Then add the current user to that timezone map
+    $userHashMap[$currTimezone][] = $currUser;
+  }
+  return $userHashMap;
 }

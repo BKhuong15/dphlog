@@ -51,7 +51,7 @@ function userListPage()
   $template->setMenu(menu());
 
   $table = new TableTemplate('user_list');
-  $table->setHeader(array('ID', 'Username', 'E-Mail'));
+  $table->setHeader(array('ID', 'Username', 'E-Mail', 'Timezone'));
   $users = getUserList();
   foreach($users as $user)
   {
@@ -59,6 +59,9 @@ function userListPage()
     $row[] = $user['id'];
     $row[] = htmlWrap('a', sanitize($user['username']), array('href' => '/user?user_id=' . $user['id']));
     $row[] = sanitize($user['email']);
+
+    $row[] = $user['timezone'];
+
     $table->addRow($row);
   }
 
@@ -117,6 +120,12 @@ function userUpsertForm()
     $field = new FieldPassword('password', 'Password');
     $form->addField($field);
   }
+
+  // Timezone
+  $list = getTimeTimezoneList();
+  $field = new FieldSelect('timezone', 'Timezone', $list);
+  $field->setValue('America/New_York');
+  $form->addField($field);
 
   $field = new FieldSubmit('submit', 'Submit');
   $form->addField($field);

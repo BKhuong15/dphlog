@@ -9,7 +9,9 @@ function installUser()
   $query->addField('email', 'TEXT', 128, array('U', 'N'));
   $query->addField('username', 'TEXT', 64, array('U', 'N'));
   $query->addField('password', 'TEXT', 256, array('N'));
+
   $query->addField('timezone', 'TEXT', 256);
+
   $query->addField('reset_code', 'TEXT', 256);
   $query->addField('reset_timestamp', 'INTEGER', 0);
 
@@ -31,6 +33,7 @@ function getUserList()
   $query->addField('id');
   $query->addField('email');
   $query->addField('username');
+  $query->addField('timezone');
 
   return $db->select($query);
 }
@@ -43,6 +46,7 @@ function getUser($user_id)
   $query->addField('id');
   $query->addField('email');
   $query->addField('username');
+  $query->addField('timezone');
   $query->addConditionSimple('id', $user_id);
 
   return $db->selectObject($query);
@@ -57,6 +61,7 @@ function getUserLogin($username, $password)
   $query->addField('email');
   $query->addField('username');
   $query->addField('password');
+  $query->addField('timezone');
   $query->addConditionSimple('username', $username);
   $user_login = $db->selectObject($query);
 
@@ -81,6 +86,7 @@ function getUserReset($username, $reset_code)
   $query->addField('id');
   $query->addField('email');
   $query->addField('username');
+  $query->addField('timezone');
   $query->addField('reset_code');
   $query->addField('reset_timestamp');
   $query->addConditionSimple('username', $username);
@@ -113,6 +119,7 @@ function createUser($user)
   $query->addField('email', $user['email']);
   $query->addField('username', $user['username']);
   $query->addField('password', password_hash($user['password'], PASSWORD_BCRYPT));
+  $query->addField('timezone', $user['timezone']);
 
   return $db->insert($query);
 }
@@ -125,6 +132,7 @@ function updateUser($user)
   $query->addField('email', $user['email']);
   $query->addField('username', $user['username']);
   $query->addConditionSimple('id', $user['id']);
+  $query->addField('timezone', $user['timezone']);
 
   $db->update($query);
 }
