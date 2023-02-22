@@ -1,10 +1,75 @@
 h1
 {
     text-align: center;
-    display: flex;
     height: 100%;
     align-items: center;
     justify-content: center;
+}
+
+.top-section
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-section .formSection,
+.top-section .date-and-epoch,
+.top-section .right-form
+{
+    height: 250px;
+}
+
+.formSection
+{
+    flex: 1;
+    background-color: lightgrey;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.date-and-epoch
+{
+    flex: 2;
+    text-align: center;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 30px;
+    background-color: #6391bb;
+    margin: 0 5px;
+}
+
+.right-form
+{
+    flex: 1;
+    background-color: #2d5171;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.convert-button
+{
+    align-items: center;
+}
+
+
+.date-and-epoch #clock-state
+{
+    color: red;
+}
+
+.date-and-epoch #clock-state
+{
+    color: red;
 }
 
 .clock
@@ -154,7 +219,6 @@ h1
 .clock-container
 {
     width: 100%;
-    padding: 24px;
 }
 
 .clockSection
@@ -189,64 +253,4 @@ h1
 {
     border: 2px solid red;
     padding: 8px;
-}
-
-.formSection
-{
-    background-color: lightgrey;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
-}
-
-.date-and-epoch
-{
-    text-align: center;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    background-color: #6391bb;
-
-}
-
-.right-form
-{
-    background-color: #2d5171;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
-}
-
-.top-section
-{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.convert-button
-{
-    align-items: center;
-}
-
-.top-section .formSection,
-.top-section .date-and-epoch,
-.top-section .right-form
-{
-    flex: 1;
-    margin: 10px;
-    height: 250px;
-}
-
-.date-and-epoch #clock-state
-{
-    color: red;
 }
