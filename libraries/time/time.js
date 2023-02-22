@@ -6,10 +6,8 @@ var state = 'now';
 var main_interval;
 $(document).ready(function()
 {
-  // Time conversions from miliseconds.
+  // Time conversions from milliseconds.
   const ONE_SECOND = 1000;
-  const ONE_MINUTE = 60000;
-  const TEN_MINUTES = 600000;
 
   let $form = $('#time_converter');
   let $rightForm = $('.right-form');
@@ -44,23 +42,19 @@ $(document).ready(function()
 
       document.getElementById('clock-state').innerHTML = "";
 
-      //clear left form.
+      // Clear left form.
       $form.find('input[name="timestamp"]').val('');
       $form.find('input[name="time"]').val('');
       $form.find('input[name="date"]').val('');
       $form.find('select[name="timezone"]').val('');
 
       let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
+
       //Add red border to the local timezone clock.
       $(".current-timezone").removeClass("current-timezone");
       $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
       main_interval = setInterval(mainLoop, ONE_SECOND);
     }).click();
-
-  //Verify user local time is equal to the server time in epoch time
-  setInterval(verifyCurrentTime, ONE_MINUTE);
-
-
 });
 
 /**
@@ -142,7 +136,6 @@ function mainLoop()
 }
 
 /**
- *
  * @param datetime: js Date object
  * @param ianaTimeZone: iana timezone string in "America/New_York" format
  * Updates the clock hands based on the time of the desired timezone.
@@ -281,68 +274,3 @@ function returnCurrentTimeBasedOnAjax(serverEpoch)
     startClockHands(date, key);
   }
 }
-
-function getCurrentTimeAjax()
-{
-  $.ajax({
-    type: "GET",
-    url: "/ajax/time",
-    dataType: "json",
-    success: function(response) {
-    // console.log("time retrieved from ajax: " + response['currentServerTime']);
-    // //default time zone is mountain time
-    // console.log("local timezone retrieved from ajax: " + response['localTimezone']);
-    returnCurrentTimeBasedOnAjax(response['currentServerTime']);
-    console.log("Ajax request submitted.");
-    },
-    error: function(xhr, status, error) {
-    console.log("Ajax function error");
-    console.log(error);
-    }
-  });
-}
-
-function verifyCurrentTime()
-{
-  $.ajax({
-    type: "GET",
-    url: "/ajax/time",
-    dataType: "json",
-    success: function(response)
-      {
-      //Get user's local time, convert to seconds, then round down/
-      let localTime = new Date().getTime() / 1000;
-      localTime = Math.floor(localTime);
-
-      if(localTime !== response['currentServerTime'])
-      {
-        console.log("Warning! User local time and server time are not equal.");
-        console.log("User time: " + localTime);
-        console.log("Server time: " + response['currentServerTime']) ;
-      }
-      },
-    error: function(xhr, status, error)
-      {
-      console.log("Ajax function error");
-      console.log(error);
-      }
-  });
-}
-//
-// $form.on('refresh', '.name-phone_numbers tbody', function()
-// {
-//   let url = '/ajax/patient/phone';
-//   let data =
-//   {
-//     operation: 'view',
-//     patient_id: $('.name-id input').val()
-//   };
-//   let $phone_list = $('.name-phone_numbers tbody');
-//   $phone_list.parents('.table-wrapper').addClass('loading');
-//   $.get(url, data, function(response)
-//   {
-//     $phone_list.html(response['data']);
-//     $phone_list.parents('.table-wrapper').removeClass('loading');
-//     qfn.growl_message(response['message']);
-//   }, 'json').error(ajaxErrorHandler);
-// });

@@ -37,16 +37,10 @@ function timePage()
   $timezones = getTimeTimezoneList();
   $userHashMap = sortUsers();
 
-//  $usersInZone = $userHashMap['America/Anchorage'];
-////  print_r($usersInZone) ;
-////  foreach ($usersInZone as $u){
-////    echo $u;
-////  }
-//  $clocks .= timeClock('America/Chicago', $usersInZone);
+  // For each timezone, add a list of users in each timezone under each clock.
   foreach ($timezones as $key => $value)
   {
     $usersInZone = $userHashMap[$key];
-    //echo $usersInZone;
     $clocks .= timeClock($key, $usersInZone);
   }
   $clocks = htmlWrap('div', $clocks, array('class' => array('clockSection')));
@@ -69,33 +63,3 @@ function timeAjax()
   );
   die(json_encode($response));
 }
-
-//function sortUsers($users)
-//{
-//  $userHashMap = array();
-//
-//  // Foreach user in the given array...
-//  foreach($users as $user){
-//    $timezone = $user['timezone'];
-//    $user = $user['user'];
-//
-//    // If the current timezone key does not exist in the hashmap yet, add it
-//    if(!array_key_exists($timezone, $userHashMap)){
-//      $userHashMap[$timezone] = array();
-//    }
-//
-//    // Then add the current user to that timezone map
-//    $userHashMap[$timezone][] = $user;
-//  }
-//
-//  // Print out the sorted users
-//  foreach ($userHashMap as $timezone => $users) {
-//    echo "Users in timezone $timezone:\n";
-//    foreach ($users as $user) {
-//      echo "- $user\n";
-//    }
-//    echo "\n";
-//  }
-//
-////return $userHashMap;
-//}
