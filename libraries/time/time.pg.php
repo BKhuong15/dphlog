@@ -22,12 +22,12 @@ function timePage()
   // Top clock.
   $topClock = htmlWrap('div', "01/01/1970", array('class' => array('current-date')));
   $topClock .= htmlWrap("div", "1234567890", array('class' => array('unix-time')));
+  $topClock .= htmlWrap('div', 'test', array('id' => array('clock-state')));
   $output .= htmlWrap('div', $topClock, array('class' => array('date-and-epoch')));
 
   //Reset/Now button.
-//  $nowButton = new FieldSubmit('now-button', 'Now');
-  $nowButtonAjax = new FieldSubmit('now-button-ajax', 'Now (Ajax)');
-  $output .= htmlWrap('div', $nowButtonAjax, array('class' => array('right-form')));
+  $nowButton = new FieldSubmit('now-button', 'Now');
+  $output .= htmlWrap('div', $nowButton, array('class' => array('right-form')));
 
   //Wrap Clock, Form, and Now button.
   $output = htmlWrap('div', $output, array('class' => array('top-section')));

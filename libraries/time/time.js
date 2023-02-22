@@ -6,93 +6,89 @@ var state = 'now';
 var main_interval;
 $(document).ready(function()
 {
-const ONE_SECOND = 1000;
-const ONE_MINUTE = 60000;
+  // Time conversions from miliseconds.
+  const ONE_SECOND = 1000;
+  const ONE_MINUTE = 60000;
+  const TEN_MINUTES = 600000;
 
-let $form = $('#time_converter');
-let $rightForm = $('.right-form');
+  let $form = $('#time_converter');
+  let $rightForm = $('.right-form');
 
-//Button to stop time and convert to inputted time.
-$form.find('.convert-button input').click(function(e)
-{
-e.preventDefault();
-clearInterval(main_interval);
+  /*******************
+   * Button to stop time and convert to inputted time.
+   *******************/
+  $form.find('.convert-button input').click(function(e)
+  {
+    e.preventDefault();
+    clearInterval(main_interval);
 
-state = 'then';
-start();
+    state = 'then';
+    mainLoop();
 
+    document.getElementById('clock-state').innerHTML = "Clocks Paused";
 
-let timezoneValue = $form.find('.field.timezone select').val();
+    let timezoneValue = $form.find('.field.timezone select').val();
 
-//Remove red border from everything, then add it to desired conversion clock.
-$(".current-timezone").removeClass("current-timezone");
-$('.clock-wrap#' + machineName(timezoneValue)).addClass('current-timezone');
-});
+    //Remove red border from everything, then add it to desired conversion clock.
+    $(".current-timezone").removeClass("current-timezone");
+    $('.clock-wrap#' + machineName(timezoneValue)).addClass('current-timezone');
+  });
 
-// //Button to restart clock timers, upon page load, click button to start clocks.
-// $rightForm.find('.now-button input').click(function(e)
-// {
-//     //prevent default behavior from function (in this case its reload the page when submit is pressed)
-//     e.preventDefault();
-//     state = 'now';
-//     start();
-//
-//     let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-//
-//     //Add red border to the local timezone clock.
-//     $(".current-timezone").removeClass("current-timezone");
-//     $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
-//     main_interval = setInterval(start, ONE_SECOND);
-//
-//     //getCurrentTimeAjax();
-//
-// }).click();
+  /*******************
+   * Now/reset button, resets the clocks to the current time
+   *******************/
+  $rightForm.find('.now-button input').click(function(e)
+    {
+      e.preventDefault();
+      state = 'now';
 
-$rightForm.find('.now-button-ajax input').click(function(e)
-{
-e.preventDefault();
-state = 'now';
+      document.getElementById('clock-state').innerHTML = "";
 
-getCurrentTimeAjax();
+      //clear left form.
+      $form.find('input[name="timestamp"]').val('');
+      $form.find('input[name="time"]').val('');
+      $form.find('input[name="date"]').val('');
+      $form.find('select[name="timezone"]').val('');
 
-//clear left form
-$form.find('input[name="timestamp"]').val('');
-$form.find('input[name="time"]').val('');
-$form.find('input[name="date"]').val('');
-$form.find('select[name="timezone"]').val('');
+      let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
+      //Add red border to the local timezone clock.
+      $(".current-timezone").removeClass("current-timezone");
+      $('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
+      main_interval = setInterval(mainLoop, ONE_SECOND);
+    }).click();
 
-let user_time_zone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-//Add red border to the local timezone clock.
-$(".current-timezone").removeClass("current-timezone");
-$('.clock-wrap#' + machineName(user_time_zone)).addClass('current-timezone');
-main_interval = setInterval(start, ONE_SECOND);
+  //Verify user local time is equal to the server time in epoch time
+  setInterval(verifyCurrentTime, ONE_MINUTE);
 
-main_interval = setInterval(getCurrentTimeAjax, ONE_SECOND);
-}).click();
-
-//Verify user local time is equal to the server time in epoch time
-setInterval(verifyCurrentTime, ONE_MINUTE);
 
 });
 
-function start()
+/**
+ * Main loop for the clocks. Updates every second in the setInterval loop
+ */
+function mainLoop()
 {
   let datetime;
   let date_time;
   let epoch;
 
   //Set up options for date time format.
-  let options =      {          day: 'numeric', month: 'numeric', year: 'numeric'      };
+  let options =
+    {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric'
+    };
 
   // "Now" means get current time from client side.
-  //If the button is pressed (state is now), then set date to current time.
+  // If the button is pressed (state is now), then set date to current time.
   if (state === 'now')
   {
     datetime = new Date();
     date_time = new Intl.DateTimeFormat('en-US', options).format(datetime);
     epoch = Math.floor(Date.now() / 1000);
   }
-  //Otherwise set the date to the inputted time.
+  // Otherwise set the date to the inputted time.
   else
   {
     let $form = $('#time_converter');
@@ -102,6 +98,7 @@ function start()
     let dateValue = $form.find('input[name="date"]').val();
     let timezone = $form.find('select[name="timezone"]').val();
 
+    // If timestamp is empty, use input from date/time section.
     if (timestamp === "")
     {
       datetime = parseDateTimeInputData(timeValue, dateValue, timezone);
@@ -109,6 +106,7 @@ function start()
 
       epoch = Math.floor(datetime.getTime() / 1000);
     }
+    // Otherwise use the input from the timestamp field.
     else
     {
       datetime = new Date(timestamp * 1000);
@@ -117,7 +115,7 @@ function start()
     }
   }
 
-  //Full dictionary of iana timezones => general zone. matches with dict in php file.
+  // Full dictionary of iana timezones => general zone. matches with dict in php file.
   const zoneDict =
     {
       'America/New_York': 'Eastern',
@@ -130,19 +128,25 @@ function start()
       //'Pacific/Honolulu': 'Hawaii (No Daylight Savings)'
     };
 
-  //Create datetimeformat object based on user's machine's current time.
+  // Create datetimeformat object based on user's machine's current time.
   $('.current-date').html(date_time);
 
-  //Get # of miliseconds since jan 1, 1970 and divide by 1000 to get seconds.
+  // Get # of miliseconds since jan 1, 1970 and divide by 1000 to get seconds.
   $('.unix-time').html(epoch);
 
-  //Update display time and clock hands for each timezone.
+  // Update display time and clock hands for each timezone.
   for (let key in zoneDict)
   {
     startClockHands(datetime, key);
   }
 }
 
+/**
+ *
+ * @param datetime: js Date object
+ * @param ianaTimeZone: iana timezone string in "America/New_York" format
+ * Updates the clock hands based on the time of the desired timezone.
+ */
 function startClockHands(datetime, ianaTimeZone)
 {
   let options =
@@ -181,7 +185,7 @@ function startClockHands(datetime, ianaTimeZone)
 /**
  * @param string: string of class/id
  * @returns {string}: machine-readable string
- * turns strings into machine-readable strings, ie timezone string -> readable class
+ * Turns strings into machine-readable strings, ie timezone string -> readable class.
  */
 function machineName(string)
 {
@@ -195,7 +199,7 @@ function machineName(string)
  * @param time: time string in "12:00 am" format
  * @param date: date in "m/d/y" format
  * @returns {Date}: Date() object for intl use
- * takes user's input from form and parses input into intl library readable format
+ * Takes user's input from form and parses input into intl library readable format.
  */
 function parseDateTimeInputData(time, date, timezone)
 {
@@ -289,7 +293,7 @@ function getCurrentTimeAjax()
     // //default time zone is mountain time
     // console.log("local timezone retrieved from ajax: " + response['localTimezone']);
     returnCurrentTimeBasedOnAjax(response['currentServerTime']);
-
+    console.log("Ajax request submitted.");
     },
     error: function(xhr, status, error) {
     console.log("Ajax function error");
@@ -324,21 +328,21 @@ function verifyCurrentTime()
       }
   });
 }
-
-$form.on('refresh', '.name-phone_numbers tbody', function()
-{
-  let url = '/ajax/patient/phone';
-  let data =
-  {
-    operation: 'view',
-    patient_id: $('.name-id input').val()
-  };
-  let $phone_list = $('.name-phone_numbers tbody');
-  $phone_list.parents('.table-wrapper').addClass('loading');
-  $.get(url, data, function(response)
-  {
-    $phone_list.html(response['data']);
-    $phone_list.parents('.table-wrapper').removeClass('loading');
-    qfn.growl_message(response['message']);
-  }, 'json').error(ajaxErrorHandler);
-});
+//
+// $form.on('refresh', '.name-phone_numbers tbody', function()
+// {
+//   let url = '/ajax/patient/phone';
+//   let data =
+//   {
+//     operation: 'view',
+//     patient_id: $('.name-id input').val()
+//   };
+//   let $phone_list = $('.name-phone_numbers tbody');
+//   $phone_list.parents('.table-wrapper').addClass('loading');
+//   $.get(url, data, function(response)
+//   {
+//     $phone_list.html(response['data']);
+//     $phone_list.parents('.table-wrapper').removeClass('loading');
+//     qfn.growl_message(response['message']);
+//   }, 'json').error(ajaxErrorHandler);
+// });

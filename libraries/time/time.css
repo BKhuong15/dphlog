@@ -245,3 +245,8 @@ h1
     margin: 10px;
     height: 250px;
 }
+
+.date-and-epoch #clock-state
+{
+    color: red;
+}
