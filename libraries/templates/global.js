@@ -170,3 +170,16 @@ function getUrlParameter(param, url)
   }
   return false;
 }
+
+/**
+ * @param string: string of class/id
+ * @returns {string}: machine-readable string
+ * Turns strings into machine-readable strings, ie timezone string -> readable class.
+ */
+function machineName(string)
+{
+  string = string.replace(/\s/g, '_');
+  string = string.toLowerCase();
+  string = string.replace(/[^A-Za-z0-9_-]/, '_');
+  return string;
+}

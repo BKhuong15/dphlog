@@ -58,8 +58,7 @@ function getRegistry()
     'logout' => 'userLogout', /** @uses userLogout */
     'json-formatter' => 'jsonFormatterPage', /** @uses jsonFormatterPage() */
     'php-unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
-    'time-tool' => 'timePage', /** @uses timePage() */
-    'ajax/time' => 'timeAjax', /** @uses timeAjax() */
+    'time' => 'timePage', /** @uses timePage() */
   );
 
   return $registry;
@@ -103,7 +102,7 @@ function menu()
   $output .= htmlWrap('a', 'JSON Formatter', array('href' => '/json-formatter'));
 
   //epoch converter
-  $output .= htmlWrap('a', 'Time', array('href' => '/time-tool'));
+  $output .= htmlWrap('a', 'Time', array('href' => '/time'));
 
   // Username.
   GLOBAL $logged_in_user;

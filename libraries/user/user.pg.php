@@ -206,7 +206,7 @@ function userUpsertFormSubmit()
   }
   catch (Exception $e)
   {
-    // user login throws an error if password is incorrect bypassing the custom error. Correct that here.
+    // User login throws an error if password is incorrect bypassing the custom error. Correct that here.
     if ($e->getCode() == EXCEPTION_PERMISSION_DENIED)
     {
       message('Incorrect password. Password is required to make changes.');

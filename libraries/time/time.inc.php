@@ -5,7 +5,7 @@ function timeForm()
   $form = new Form('time_converter');
 
   // Timestamp
-  $field = new FieldText("timestamp", "Timestamp");
+  $field = new FieldText('timestamp', 'Timestamp');
   $form->addField($field);
 
   // Date
@@ -32,10 +32,11 @@ function timeForm()
 }
 
 /**
- * @param string $timezone: String containing iana time zone in this format "America/Chicago"
- * @return string: Wrapped html string containing a completed clock based on the timezone given
+ * @param $timezone: String containing iana time zone in this format 'America/Chicago'.
+ * @param $users_in_zone: A list of the users in the timezone, previously sorted and gathered from the db.
+ * @return: Wrapped html string containing a completed clock based on the timezone given.
  */
-function timeClock($timezone, $usersInZone)
+function timeClock($timezone, $users_in_zone)
 {
   $output = '';
   $output .= htmlWrap('h2', getTimeTimezoneList($timezone), array('class' => array('header')));
@@ -55,24 +56,20 @@ function timeClock($timezone, $usersInZone)
 
   $output .=  htmlWrap('div', $face . $inner_face, array('class' => array('clock')));
 
-  $output .= htmlWrap("div", '01:00:00 PM', array('class' => array('time')));
-  $output .= htmlWrap("div", $timezone, array('class' => array('timezone')));
+  $output .= htmlWrap('div', '01:00:00 PM', array('class' => array('time')));
+  $output .= htmlWrap('div', $timezone, array('class' => array('timezone')));
 
-  $userList = '';
+  $user_list = '';
+
   // If the user list for that timezone is empty, add a None to the list.
-  if (is_null($usersInZone))
+  if ($users_in_zone)
   {
-    $userList .= htmlWrap('li', 'None', array('class' => array('user')));
-  }
-  // Otherwise add a list of the users in that timezone.
-  else
-  {
-    foreach ($usersInZone as $user) {
-      $userList .= htmlWrap('li', $user, array('class' => array('user')));
+    foreach ($users_in_zone as $user)
+    {
+      $user_list .= htmlWrap('li', $user, array('class' => array('user')));
     }
+    $output .= htmlWrap('ul', $user_list, array('class' => array('user-list')));
   }
-
-  $output .= htmlWrap('ul', $userList, array('class' => array('user-list')));
 
   $attr = array (
     'id' => array(toMachine($timezone)),
@@ -98,7 +95,7 @@ function getTimeTimezoneList($key = FALSE)
 }
 
 /**
- * @return array: A map of users sorted by timezone.
+ * @return $user_hash_map: A map of users sorted by timezone.
  * Gets the user list from the database and sorts each user into their timezones.
  */
 function sortUsers()
@@ -106,20 +103,26 @@ function sortUsers()
   // Get user list from database.
   $users = getUserList();
 
-  $userHashMap = array();
+
+  // Initialize map with full timezone list.
+  $user_hash_map = getTimeTimezoneList();
+  foreach($user_hash_map as $key => $value)
+  {
+    $user_hash_map[$key] = array();
+  }
 
   foreach ($users as $user)
   {
-    $currUser = $user['username'];
-    $currTimezone = $user['timezone'];
+    $curr_user = $user['username'];
+    $curr_timezone = $user['timezone'];
 
     // If the current timezone key does not exist in the hashmap yet, add it.
-    if (!array_key_exists($currTimezone, $userHashMap)){
-      $userHashMap[$currTimezone] = array();
+    if (!array_key_exists($curr_timezone, $user_hash_map)){
+      $user_hash_map[$curr_timezone] = array();
     }
     // Then add the current user to that timezone map.
-    $userHashMap[$currTimezone][] = $currUser;
+    $user_hash_map[$curr_timezone][] = $curr_user;
   }
 
-  return $userHashMap;
+  return $user_hash_map;
 }
