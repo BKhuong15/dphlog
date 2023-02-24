@@ -57,7 +57,7 @@ function getRegistry()
     'unknown' => 'unknown', /** @uses unknown() */
     'logout' => 'userLogout', /** @uses userLogout */
     'json-formatter' => 'jsonFormatterPage', /** @uses jsonFormatterPage() */
-    'php-unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
+    'unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
     'time' => 'timePage', /** @uses timePage() */
   );
 
@@ -103,6 +103,8 @@ function menu()
 
   //epoch converter
   $output .= htmlWrap('a', 'Time', array('href' => '/time'));
+
+  $output .= htmlWrap('a', 'Unserialize', array('href' => '/unserialize'));
 
   // Username.
   GLOBAL $logged_in_user;

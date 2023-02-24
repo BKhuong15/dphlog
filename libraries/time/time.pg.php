@@ -35,12 +35,12 @@ function timePage()
   // Clocks.
   $clocks = '';
   $timezones = getTimeTimezoneList();
-  $user_hashMap = sortUsers();
+  $user_hash_map = sortUsers();
 
   // For each timezone, add a list of users in each timezone under each clock.
   foreach ($timezones as $key => $value)
   {
-    $users_in_zone = $user_hashMap[$key];
+    $users_in_zone = $user_hash_map[$key];
     $clocks .= timeClock($key, $users_in_zone);
   }
 
