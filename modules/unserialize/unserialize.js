@@ -1,53 +1,60 @@
 /**
  * Created by DanielPHenry on 2/22/2019.
  */
-
 $(document).ready(function()
 {
-  //$('#log_table').on('click', 'tr', function()
-  //{
-  //  console.log('hello');
-  //  //$('this').css('height', 'auto');
-  //});
+  let $form = $('#unserialize');
 
-  var $form = $('#json_formatter');
   $form.find('input[name="submit"]').click(function(e)
   {
     e.preventDefault();
-    var snippet = $form.find('.old textarea').val();
-    snippet = JSON.parse(snippet);
-    snippet = JSON.stringify(snippet, null, 2);
-    snippet = syntaxHighlight(snippet);
 
-    $('.json_formatter_output').html(snippet);
-  });
+    let base64 = $form.find('.field.base64-check input').prop('checked');
+    let unserialized = $form.find('.field.unserialize-check input').prop('checked');
+    let raw_input = $form.find('.field.string-input textarea').val();
 
-  function syntaxHighlight(json)
-  {
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match)
+    let data = {
+      base64: $form.find('.field.base64-check input').prop('checked'),
+    }
+    console.log(raw_input);
+    console.log(base64);
+    console.log(unserialized);
+
+    $.post('/ajax/unserialize?operation=view', data, function(response)
     {
-      var cls = 'number';
-      if (/^"/.test(match))
+      if (response['status'])
       {
-        if (/:$/.test(match))
-        {
-          cls = 'key';
-        }
-        else
-        {
-          cls = 'string';
-        }
+        // post output response['data']
       }
-      else if (/true|false/.test(match))
+      else
       {
-        cls = 'boolean';
+        // error handling
+        console.log(response['data']);
       }
-      else if (/null/.test(match))
-      {
-        cls = 'null';
-      }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
-  }
+    }, 'json');
+
+    let test_input = 'SGVsbG8gV29ybGQ=';
+
+    let output = '';
+    //
+    // if (base64 && unserialized)
+    // {
+    //   output = atob(JSON.parse(raw_input));
+    // }
+    // else if (base64)
+    // {
+    //   output = atob(raw_input);
+    // }
+    // else if (unserialized)
+    // {
+    //   output = JSON.parse(raw_input);
+    // }
+    // else
+    // {
+    //   output = raw_input;
+    // }
+
+    $('.unserialize_output').html(output);
+  });
 });
+

@@ -1,21 +1,21 @@
-#json_formatter
+#unserialize
 {
   float: left;
   width: 500px;
 }
-#json_formatter .field
+#unserialize .field
 {
   max-width: 480px;
 }
-#json_formatter .field input,
-#json_formatter .field textarea
+#unserialize .field input,
+#unserialize .field textarea
 {
   max-width: 480px;
 }
 
 
 
-.json_formatter_output
+.unserialize_output
 {
   width: 500px;
   height: 400px;

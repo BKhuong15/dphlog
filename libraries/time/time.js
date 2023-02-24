@@ -10,7 +10,7 @@ $(document).ready(function()
   const MILI_SEC = 1000;
 
   let $form = $('#time_converter');
-  let $rightForm = $('.right-form');
+  let $right_form = $('.right-form');
   let $date_and_epoch = $('.date-and-epoch');
 
   // Initialize clocks.
@@ -39,7 +39,7 @@ $(document).ready(function()
   /**********************************************************
    * Now/reset button, resets the clocks to the current time
    **********************************************************/
-  $rightForm.find('.now-button input').click(function(e)
+  $right_form.find('.now-button input').click(function(e)
     {
       e.preventDefault();
       state = 'now';
@@ -94,14 +94,14 @@ function clockStep()
     let $form = $('#time_converter');
 
     let timestamp = $form.find('.field.timestamp input').val();
-    let timeValue = $form.find('.field.time input').val();
-    let dateValue = $form.find('.field.date input').val();
+    let time_value = $form.find('.field.time input').val();
+    let date_value = $form.find('.field.date input').val();
     let timezone = $form.find('.field.timezone select').val();
 
     // If timestamp is empty, use input from date/time section.
     if (timestamp === "")
     {
-      datetime = parseDateTimeInputData(timeValue, dateValue, timezone);
+      datetime = parseDateTimeInputData(time_value, date_value, timezone);
       date_time = new Intl.DateTimeFormat('en-US', options).format(datetime);
 
       epoch = Math.floor(datetime.getTime() / 1000);
@@ -191,23 +191,25 @@ function startClockHands(datetime, iana_timezone)
 function parseDateTimeInputData(time, date, timezone)
 {
   //Parse time string.
-  let parsedTime = time.match(/(\d{2}):(\d{2}) (am|pm)/);
-  let hours = parsedTime[1];
-  let minutes = parsedTime[2];
-  let ampm = parsedTime[3];
+  let parsed_time = time.match(/(\d{2}):(\d{2}) (am|pm)/);
+  let hours = parsed_time[1];
+  let minutes = parsed_time[2];
+  let ampm = parsed_time[3];
 
   //Distinguish between am/pm.
-  if (ampm === 'pm' && hours !== '12') {
+  if (ampm === 'pm' && hours !== '12')
+  {
     hours = (parseInt(hours, 10) + 12).toString();
-  } else if (ampm === 'am' && hours === '12') {
+  } else if (ampm === 'am' && hours === '12')
+  {
     hours = '00';
   }
 
   //Parse date string.
-  let parsedDate = date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-  let month = parseInt(parsedDate[1]) - 1;
-  let day = parsedDate[2];
-  let year = parsedDate[3];
+  let parsed_date = date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  let month = parseInt(parsed_date[1]) - 1;
+  let day = parsed_date[2];
+  let year = parsed_date[3];
 
   //Convert to Date() object.
   let temp = new Date(year, month, day, hours, minutes);

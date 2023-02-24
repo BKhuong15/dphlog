@@ -20,10 +20,10 @@ function timePage()
   $output .= htmlWrap('div', timeForm(), array('class' => array('form-section')));
 
   // Top clock.
-  $topClock = htmlWrap('div', '01/01/1970', array('class' => array('current-date')));
-  $topClock .= htmlWrap('div', '1234567890', array('class' => array('unix-time')));
-  $topClock .= htmlWrap('div', '', array('id' => array('clock-state')));
-  $output .= htmlWrap('div', $topClock, array('class' => array('date-and-epoch')));
+  $top_clock = htmlWrap('div', '01/01/1970', array('class' => array('current-date')));
+  $top_clock .= htmlWrap('div', '1234567890', array('class' => array('unix-time')));
+  $top_clock .= htmlWrap('div', '', array('id' => array('clock-state')));
+  $output .= htmlWrap('div', $top_clock, array('class' => array('date-and-epoch')));
 
   // Reset/Now button.
   $now_button = new FieldSubmit('now-button', 'Now');

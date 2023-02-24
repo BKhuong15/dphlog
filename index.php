@@ -56,9 +56,11 @@ function getRegistry()
     'login' => 'userLoginForm', /** @uses userLoginForm() */
     'unknown' => 'unknown', /** @uses unknown() */
     'logout' => 'userLogout', /** @uses userLogout */
+
     'json-formatter' => 'jsonFormatterPage', /** @uses jsonFormatterPage() */
-    'unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
     'time' => 'timePage', /** @uses timePage() */
+    'unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
+    'ajax/unserialize' => 'phpUnserializeAjax', /** @uses phpUnserializeAjax() */
   );
 
   return $registry;
