@@ -9,52 +9,41 @@ $(document).ready(function()
   {
     e.preventDefault();
 
-    let base64 = $form.find('.field.base64-check input').prop('checked');
-    let unserialized = $form.find('.field.unserialize-check input').prop('checked');
-    let raw_input = $form.find('.field.string-input textarea').val();
-
+    console.log('button pressed');
     let data = {
-      base64: $form.find('.field.base64-check input').prop('checked'),
+      operation: 'view',
+      base_64: $form.find('.field.base64-check input').prop('checked'),
+      serialized: $form.find('.field.unserialize-check input').prop('checked'),
+      raw_input: $form.find('.field.string-input textarea').val(),
     }
-    console.log(raw_input);
-    console.log(base64);
-    console.log(unserialized);
 
+    console.log(data);
+    // Send post request to this link with the data
     $.post('/ajax/unserialize?operation=view', data, function(response)
     {
-      if (response['status'])
+      if (response.status == true)
       {
         // post output response['data']
+        console.log('Reponse status success')
+        console.log(response['data']);
       }
       else
       {
         // error handling
-        console.log(response['data']);
+        console.log('Error processing data: ' + response.message);
+        //console.log(response['data']);
       }
-    }, 'json');
+
+      // Update html output with converted text.
+      $('.unserialize_output').html(response.data);
+
+    }, 'json', function(response, status){ console.log('Error.')});
 
     let test_input = 'SGVsbG8gV29ybGQ=';
 
-    let output = '';
-    //
-    // if (base64 && unserialized)
-    // {
-    //   output = atob(JSON.parse(raw_input));
-    // }
-    // else if (base64)
-    // {
-    //   output = atob(raw_input);
-    // }
-    // else if (unserialized)
-    // {
-    //   output = JSON.parse(raw_input);
-    // }
-    // else
-    // {
-    //   output = raw_input;
-    // }
 
-    $('.unserialize_output').html(output);
+
+
   });
 });
 
