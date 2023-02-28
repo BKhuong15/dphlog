@@ -5,11 +5,11 @@ $(document).ready(function()
 {
   let $form = $('#unserialize');
 
-  $form.find('input[name="submit"]').click(function(e)
+  $form.find('.submit input').click(function(e)
   {
     e.preventDefault();
 
-    console.log('button pressed');
+    // Data from user input.
     let data = {
       operation: 'view',
       base_64: $form.find('.field.base64-check input').prop('checked'),
@@ -17,33 +17,24 @@ $(document).ready(function()
       raw_input: $form.find('.field.string-input textarea').val(),
     }
 
-    console.log(data);
     // Send post request to this link with the data
     $.post('/ajax/unserialize?operation=view', data, function(response)
     {
-      if (response.status == true)
+      if (response.status === true)
       {
-        // post output response['data']
-        console.log('Reponse status success')
+        // Post output response['data']
         console.log(response['data']);
       }
       else
       {
-        // error handling
+        // Error handling
         console.log('Error processing data: ' + response.message);
-        //console.log(response['data']);
       }
 
       // Update html output with converted text.
       $('.unserialize_output').html(response.data);
 
     }, 'json', function(response, status){ console.log('Error.')});
-
-    let test_input = 'SGVsbG8gV29ybGQ=';
-
-
-
-
   });
 });
 

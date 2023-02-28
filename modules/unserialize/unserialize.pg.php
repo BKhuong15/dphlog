@@ -1,16 +1,12 @@
 <?php
 function phpUnserializePage()
 {
-  $sample = 'Hello World';
-  $example = htmlWrap('span', serialize($sample)) . '<br>';
-  $example .= htmlWrap('span', base64_encode(serialize($sample)));
   $template = new HTMLTemplate();
   $template->setTitle('Unserialize');
   $template->addCssFilePath('/modules/unserialize/unserialize.css');
   $template->addJsFilePath('/modules/unserialize/unserialize.js');
 
   $template->setMenu(menu());
-
 
   $form = new Form('unserialize');
 
@@ -20,14 +16,14 @@ function phpUnserializePage()
   $field = new FieldCheckbox('unserialize-check', 'Unserialize');
   $form->addField($field);
 
-  $field = new FieldTextarea('string-input', 'JSON String Input');
+  $field = new FieldTextarea('string-input', 'String Input');
   $form->addField($field);
 
   $field = new FieldSubmit('submit', 'Submit');
   $form->addField($field);
 
   $body = $form . htmlWrap('pre', '', array('class' => array('unserialize_output')));
-  $template->setBody(htmlWrap('h1', 'Unserialize') . $example .  $body);
+  $template->setBody(htmlWrap('h1', 'Unserialize') .  $body);
   return $template;
 }
 
@@ -61,8 +57,8 @@ function phpUnserializeAjax()
 
         // Checks if these variables are in the post array, if not set to 1.
         // Base64 and serialized are optional. If not set, assume its set and move forward.
-        $base_64 = isset($_POST['base_64']) ? $_POST['base_64'] : 0;
-        $serialized = isset($_POST['serialized']) ? $_POST['serialized'] : 0;
+        $base_64 = (isset($_POST['base_64']) && ($_POST['base_64'] === 'true')) ? 1 : 0;
+        $serialized = (isset($_POST['serialized']) && ($_POST['serialized'] === 'true')) ? 1 : 0;
 
         $raw_input = $_POST['raw_input'];
 
@@ -71,7 +67,6 @@ function phpUnserializeAjax()
         {
           $raw_input = base64_decode($raw_input);
 
-          error_log('base 64 if statement entered');
           // Check to make sure the raw input can actually be decoded.
           if ($raw_input === false)
           {
@@ -90,7 +85,6 @@ function phpUnserializeAjax()
             throw new Exception('Cannot unserialize string. Or results is false.');
           }
         }
-        //$converted_input = base64_decode($raw_input);
         $response['data'] = $raw_input;
 
         // Break statement needed for the case.
@@ -107,10 +101,8 @@ function phpUnserializeAjax()
     $response['status'] = false;
     $response['data'] = $e->getMessage();
   }
+
   header('Content-Type: application/json');
   echo json_encode($response, JSON_PARTIAL_OUTPUT_ON_ERROR);
   die();
 }
-
-// base64/serialzed- YToyOntzOjQ6Im5hbWUiO3M6MToiNCI7czoxMDoic2VxdWVudGlhbCI7czoyOiIyIjt9
-// serialized- a:2:{s:4:"name";s:1:"4";s:10:"sequential";s:1:"2";}
