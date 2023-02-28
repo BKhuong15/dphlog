@@ -20,20 +20,7 @@ $(document).ready(function()
     // Send post request to this link with the data
     $.post('/ajax/unserialize?operation=view', data, function(response)
     {
-      if (response.status === true)
-      {
-        // Post output response['data']
-        console.log(response['data']);
-      }
-      else
-      {
-        // Error handling
-        console.log('Error processing data: ' + response.message);
-      }
-
-      // Update html output with converted text.
-      $('.unserialize_output').html(response.data);
-
+      $('.unserialize_output').text(response.data);
     }, 'json', function(response, status){ console.log('Error.')});
   });
 });

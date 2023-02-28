@@ -23,7 +23,7 @@ function phpUnserializePage()
   $form->addField($field);
 
   $body = $form . htmlWrap('pre', '', array('class' => array('unserialize_output')));
-  $template->setBody(htmlWrap('h1', 'Unserialize') .  $body);
+  $template->setBody(htmlWrap('h1', 'Unserialize') . $body);
   return $template;
 }
 
@@ -49,18 +49,18 @@ function phpUnserializeAjax()
         {
           throw new Exception('Expected post method.');
         }
+
         // Checks if raw input data is set.
         if (!isset($_POST['raw_input']))
         {
           throw new Exception('Where is my data?');
         }
+        $raw_input = $_POST['raw_input'];
 
         // Checks if these variables are in the post array, if not set to 1.
         // Base64 and serialized are optional. If not set, assume its set and move forward.
         $base_64 = (isset($_POST['base_64']) && ($_POST['base_64'] === 'true')) ? 1 : 0;
         $serialized = (isset($_POST['serialized']) && ($_POST['serialized'] === 'true')) ? 1 : 0;
-
-        $raw_input = $_POST['raw_input'];
 
         // If base64 decode is checked...
         if ($base_64)
@@ -85,7 +85,7 @@ function phpUnserializeAjax()
             throw new Exception('Cannot unserialize string. Or results is false.');
           }
         }
-        $response['data'] = $raw_input;
+        $response['data'] = print_r($raw_input, TRUE);
 
         // Break statement needed for the case.
         break;
