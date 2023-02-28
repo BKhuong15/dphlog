@@ -11,9 +11,11 @@ function phpUnserializePage()
   $form = new Form('unserialize');
 
   $field = new FieldCheckbox('base64-check', 'Base64 Decode');
+  $field->setValue(TRUE);
   $form->addField($field);
 
   $field = new FieldCheckbox('unserialize-check', 'Unserialize');
+  $field->setValue(TRUE);
   $form->addField($field);
 
   $field = new FieldTextarea('string-input', 'String Input');
