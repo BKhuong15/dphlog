@@ -230,3 +230,84 @@ function parseDateTimeInputData(time, date, timezone)
 
   return datetime;
 }
+
+
+$(document).ready(function()
+{
+  let qemr_full_time_price = 69;
+  let other_full_time_price = 180;
+  let qemr_pt_provider_price = 35;
+  let other_pt_provider_price = 180;
+  let qemr_calls_price = 0.10;
+  let other_calls_price = 99999;
+
+  let $full_time_provider_input = $("#provider-input");
+  let $qemr_provider_value = $("#qemr-provider-value");
+  let $other_provider_value = $("#other-provider-value");
+
+  let $part_time_provider_input = $("#pt-provider-input");
+  let $qemr_pt_provider_value = $("#qemr-pt-provider-value");
+  let $other_pt_provider_value = $("#other-pt-provider-value");
+
+  let $reminder_calls_input = $("#reminder-calls-input");
+  let $qemr_reminder_calls_value = $("#qemr-calls-value");
+  let $other_reminder_calls_value = $("#other-calls-value");
+
+  let $qemr_totals_cell = $("#qemr-total-value");
+
+  let qemr_full_time_number = 0;
+  let qemr_part_time_number = 0;
+  let qemr_calls_number = 0;
+
+
+
+  let full_time_provider_value = parseFloat($full_time_provider_input.val());
+  qemr_full_time_number = full_time_provider_value * qemr_full_time_price;
+  $qemr_provider_value.text('$' + qemr_full_time_number);
+  $other_provider_value.text('$' + (full_time_provider_value * other_full_time_price));
+
+  $full_time_provider_input.change(function()
+  {
+    full_time_provider_value = parseFloat($full_time_provider_input.val());
+    qemr_full_time_number = full_time_provider_value * qemr_full_time_price;
+    $qemr_provider_value.text('$' + qemr_full_time_number);
+    $other_provider_value.text('$' + (full_time_provider_value * other_full_time_price));
+    $qemr_totals_cell.trigger('refresh');
+  });
+
+  let part_time_provider_value = parseFloat($part_time_provider_input.val());
+  qemr_part_time_number = part_time_provider_value * qemr_pt_provider_price;
+  $qemr_pt_provider_value.text('$' + qemr_part_time_number);
+  $other_pt_provider_value.text('$' + (part_time_provider_value * other_pt_provider_price));
+
+  $part_time_provider_input.change(function()
+  {
+    part_time_provider_value = parseFloat($part_time_provider_input.val());
+    qemr_part_time_number = part_time_provider_value * qemr_pt_provider_price;
+    $qemr_pt_provider_value.text('$' + qemr_part_time_number);
+    $other_pt_provider_value.text('$' + (part_time_provider_value * other_pt_provider_price));
+    $qemr_totals_cell.trigger('refresh');
+  });
+
+  $reminder_calls_input.change(function()
+  {
+    let reminder_calls_value = parseFloat($reminder_calls_input.val());
+    qemr_calls_number = (reminder_calls_value * qemr_calls_price);
+    $qemr_reminder_calls_value.text('$' + qemr_calls_number.toFixed(2));
+    //$other_reminder_calls_value.text('$' + (reminder_calls_value * other_calls_price));
+    $qemr_totals_cell.trigger('refresh');
+  });
+
+
+  let total = (qemr_full_time_number + qemr_part_time_number + qemr_calls_number);
+  $qemr_totals_cell.text('$' + total);
+
+  $qemr_totals_cell.on('refresh', function()
+  {
+    total = (qemr_full_time_number + qemr_part_time_number + qemr_calls_number);
+
+    $qemr_totals_cell.text('$' + total.toFixed(2));
+  });
+
+});
+
