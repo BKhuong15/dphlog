@@ -1,19 +1,30 @@
+h1
+{
+  margin: 5px 0 5px 10px;
+}
 #json_formatter
 {
   float: left;
+  margin-left: 10px;
+}
+.field_group.top_group
+{
   width: 500px;
 }
+
 #json_formatter .field
 {
   max-width: 480px;
+  margin-top: 0;
 }
-#json_formatter .field input,
 #json_formatter .field textarea
 {
   max-width: 480px;
 }
-
-
+.submit_group
+{
+  margin-top: 52px;
+}
 
 .json_formatter_output
 {
@@ -23,7 +34,6 @@
   background-color: white;
   height: 500px;
   border: 1px solid black;
-  /*margin-left: 20px;*/
   margin: 10px;
   padding: 5px;
   overflow: scroll;

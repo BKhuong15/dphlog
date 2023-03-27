@@ -45,13 +45,14 @@ include ROOT_PATH . '/libraries/user/user.db.php';
 include ROOT_PATH . '/libraries/user/user.inc.php';
 include ROOT_PATH . '/libraries/user/user.pg.php';
 
-//include ROOT_PATH . '/log/log.db.php';
-include ROOT_PATH . '/log/log.inc.php';
-include ROOT_PATH . '/log/log.pg.php';
+include ROOT_PATH . '/modules/log/log.inc.php';
+include ROOT_PATH . '/modules/log/log.pg.php';
 
-include ROOT_PATH . '/json_formatter/json_formatter.pg.php';
+include ROOT_PATH . '/modules/json_formatter/json_formatter.pg.php';
+
 include ROOT_PATH . '/modules/unserialize/unserialize.pg.php';
 
-//load file
-include ROOT_PATH . '/libraries/time/time.pg.php';
-include ROOT_PATH . '/libraries/time/time.inc.php';
+include ROOT_PATH . '/modules/time/time.pg.php';
+include ROOT_PATH . '/modules/time/time.inc.php';
+
+include ROOT_PATH . '/modules/calculator/calculator.pg.php';

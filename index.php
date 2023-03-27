@@ -61,6 +61,7 @@ function getRegistry()
     'time' => 'timePage', /** @uses timePage() */
     'unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
     'ajax/unserialize' => 'phpUnserializeAjax', /** @uses phpUnserializeAjax() */
+    'calculator' => 'calculatorPage', /** @uses calculatorPage() */
   );
 
   return $registry;
@@ -70,8 +71,8 @@ function home()
 {
   $template = new HTMLTemplate();
   $template->setTitle('DPH Log');
-  $template->addCssFilePath('/log/log.css');
-  $template->addJsFilePath('/log/log.js');
+  $template->addCssFilePath('/modules/log/log.css');
+  $template->addJsFilePath('/modules/log/log.js');
 
   $template->setMenu(menu());
   $template->setBody(htmlWrap('h1', 'Welcome to Daniel P Henry\'s PHP Error Log Reader') . logView());
@@ -107,6 +108,7 @@ function menu()
   $output .= htmlWrap('a', 'Time', array('href' => '/time'));
 
   $output .= htmlWrap('a', 'Unserialize', array('href' => '/unserialize'));
+  $output .= htmlWrap('a', 'Calculator', array('href' => '/calculator'));
 
   // Username.
   GLOBAL $logged_in_user;

@@ -3,8 +3,8 @@ function jsonFormatterPage()
 {
   $template = new HTMLTemplate();
   $template->setTitle('DPH Log');
-  $template->addCssFilePath('/json_formatter/json_formatter.css');
-  $template->addJsFilePath('/json_formatter/json_formatter.js');
+  $template->addCssFilePath('/modules/json_formatter/json_formatter.css');
+  $template->addJsFilePath('/modules/json_formatter/json_formatter.js');
 
   $template->setMenu(menu());
 
@@ -18,16 +18,8 @@ function jsonFormatterPage()
   $form->addGroup($group);
 
   // old.
-  $field = new FieldTextarea('old', 'JSON String');
+  $field = new FieldTextarea('old', '<none>');
   $field->setGroup($group);
-  $form->addField($field);
-
-  $field = new FieldDate('date', 'Date');
-//  $field->setValue('01/08/2023');
-  $form->addField($field);
-
-  $field = new FieldTime('time', '<none>');
-//  $field->setValue('01/08/2023');
   $form->addField($field);
 
   /***********************
