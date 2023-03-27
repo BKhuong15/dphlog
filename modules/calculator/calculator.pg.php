@@ -30,7 +30,6 @@ function calculatorPage()
 
   // Full time providers
   $provider_info = '';
-//  $provider_info .= htmlWrap('td', fieldNumber('full_time_provider', 1), array('class' => array('column-2')));
   $provider_info .= htmlWrap('td', 'Full Time Providers', array('class' => array('column-1')));
   $provider_info .= htmlWrap('td', fieldNumber('full_time_provider', 1), array('class' => array('column-2')));
   $provider_info .= htmlWrap('td', '$0.00', array('id' => 'qemr-provider-value', 'class' => array('column-3')));
@@ -39,7 +38,6 @@ function calculatorPage()
 
   // Part time providers
   $part_time_providers = '';
-//  $part_time_providers .= htmlWrap('td', fieldNumber('part_time_provider'), array('class' => array('column-2')));
   $part_time_providers .= htmlWrap('td', 'Part Time Providers', array('class' => array('column-1')));
   $part_time_providers .= htmlWrap('td', fieldNumber('part_time_provider'), array('class' => array('column-2')));
   $part_time_providers .= htmlWrap('td', '$0.00', array('id' => 'qemr-pt-provider-value', 'class' => array('column-3')));
@@ -48,7 +46,6 @@ function calculatorPage()
 
   // Support personnel.
   $support_persons = '';
-//  $support_persons .= htmlWrap('td', fieldNumber('support'), array('class' => array('column-2')));
   $support_persons .= htmlWrap('td', 'Support Personnel', array('class' => array('column-1')));
   $support_persons .= htmlWrap('td', fieldNumber('support'), array('class' => array('column-2')));
   $support_persons .= htmlWrap('td', '$0', array('id' => 'qemr-support-value', 'class' => array('column-3')));
@@ -67,27 +64,17 @@ function calculatorPage()
   $connect_input .= htmlWrap('span', '', array('class' => array('slider', 'round')));
   $connect_input = htmlWrap('label', $connect_input, array('class' => array('switch')));
   $connect .= htmlWrap('td', $connect_input, array('class' => array('column-2')));
-//  $connect .= htmlWrap('td', 'Connect', array('class' => array('column-1')));
   $connect .= htmlWrap('td', '$0.00', array('id' => 'qemr-connect-value', 'class' => array('column-3')));
   $connect .= htmlWrap('td', '$0.00', array('id' => 'other-connect-value', 'class' => array('column-4')));
   $table .= htmlWrap('tr', $connect, array('class' => array('connect-info')));
 
   // Reminder calls.
   $reminder_calls = '';
-//  $reminder_calls .= htmlWrap('td', fieldNumber('reminder_calls'), array('class' => array('column-2')));
   $reminder_calls .= htmlWrap('td', 'Reminder Calls', array('class' => array('column-1')));
   $reminder_calls .= htmlWrap('td', fieldNumber('reminder_calls'), array('class' => array('column-2')));
   $reminder_calls .= htmlWrap('td', '$0.00', array('id' => 'qemr-calls-value', 'class' => array('column-3')));
   $reminder_calls .= htmlWrap('td', '$0.00', array('id' => 'other-calls-value', 'class' => array('column-4')));
   $table .= htmlWrap('tr', $reminder_calls, array('class' => array('calls-info')));
-
-  // Totals.
-//  $total_prices = '';
-//  $total_prices .= htmlWrap('td', 'Total', array('class' => array('column-1')));
-//  $total_prices .= htmlWrap('td', '', array('class' => array('column-2')));
-//  $total_prices .= htmlWrap('td', '$0', array('id' => 'qemr-total-value', 'class' => array('column-3')));
-//  $total_prices .= htmlWrap('td', '$0', array('id' => 'other-total-value', 'class' => array('column-4')));
-//  $table .= htmlWrap('tr', $total_prices, array('class' => array('total-info')));
 
   // Combine items.
   $full_table = $table_header . htmlWrap('tbody', $table);

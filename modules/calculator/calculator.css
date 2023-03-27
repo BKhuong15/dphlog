@@ -12,10 +12,19 @@ body
 {
   margin-top: 20px;
   font-size: 20px;
+  font-weight: 500;
 }
 
 
 /* Table */
+#price_calculator .column-1
+{
+  text-align: left;
+}
+#price_calculator .column-2
+{
+  width: 80px;
+}
 #price_calculator .column-3,
 #price_calculator .column-4
 {
@@ -42,9 +51,9 @@ body
   border: none;
   padding: 10px 5px;
 }
-#price_calculator tr:nth-child(even)
+#price_calculator tbody tr:nth-child(odd)
 {
-  background-color: #EEE;
+  background-color: #BBBDF6;
 }
 #price_calculator thead .column-3
 {
@@ -63,17 +72,18 @@ body
   font-size: 22px;
   /*width: 200px;*/
   /*height: 60px;*/
+  color: #FFF;
 }
 #price_calculator thead .column-4 .total-wrapper
 {
-  background-color: #FFA0AB;
+  /*background-color: #FFA0AB;*/
+  background-color: #E01A4F;
   padding: 2px;
   border-radius: 3px;
 }
 #price_calculator tbody .column-2,
 #price_calculator tbody .column-3
 {
-  /*text-align: right;*/
   border-right: 2px dashed #666;
 }
 .connect-info .column-2
@@ -95,6 +105,7 @@ body
   border: none;
   background-color: transparent;
   font-size: 18px;
+  outline: none;
 }
 
 #price_calculator .number-field-wrapper input.minus,
