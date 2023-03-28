@@ -73,11 +73,13 @@ body
   /*width: 200px;*/
   /*height: 60px;*/
   color: #FFF;
+  text-shadow: 0px 0px 4px #444;
 }
 #price_calculator thead .column-4 .total-wrapper
 {
   /*background-color: #FFA0AB;*/
-  background-color: #E01A4F;
+  /*background-color: #E01A4F;*/
+  background-color: #AAFFDB;
   padding: 2px;
   border-radius: 3px;
 }

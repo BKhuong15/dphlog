@@ -8,8 +8,8 @@ function calculatorPage()
    *   Header
    *****************************/
   $table_header = '';
-  $table_header .= htmlWrap('th', 'qty', array('class' => array('column-1')));
-  $table_header .= htmlWrap('th', 'label', array('class' => array('column-2')));
+  $table_header .= htmlWrap('th', '', array('class' => array('column-1')));
+  $table_header .= htmlWrap('th', '', array('class' => array('column-2')));
 
   $label = htmlWrap('span', 'QuickEMR', array('class' => array('label'))) . htmlSolo('br');
   $label .= htmlWrap('span', '$69.00', array('class' => array('total')));
