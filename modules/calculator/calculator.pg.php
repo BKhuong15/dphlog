@@ -47,7 +47,7 @@ function calculatorPage()
 
   // Support personnel.
   $support_persons = '';
-  $support_persons .= htmlWrap('td', 'Support Personnel', array('class' => array('column-1')));
+  $support_persons .= htmlWrap('td', 'Non-Provider Users', array('class' => array('column-1')));
   $support_persons .= htmlWrap('td', fieldNumber('support'), array('class' => array('column-2')));
   $support_persons .= htmlWrap('td', '$0', array('id' => 'qemr-support-value', 'class' => array('column-3')));
   $support_persons .= htmlWrap('td', '$0', array('id' => 'other-support-value', 'class' => array('column-4')));
@@ -55,7 +55,7 @@ function calculatorPage()
 
   // Connect.
   $connect = '';
-  $connect .= htmlWrap('td', 'Connect', array('class' => array('column-1')));
+  $connect .= htmlWrap('td', 'Connect/Reach out to patients', array('class' => array('column-1')));
   $attr = array(
     'type' => 'checkbox',
     'id' => 'connect-input',
