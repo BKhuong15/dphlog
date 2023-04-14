@@ -2,7 +2,7 @@
 *
 {
   font-family: Montserrat, arial, sans-serif;
-  font-size: 20px;
+  font-size: 18px;
 }
 body
 {
@@ -51,7 +51,7 @@ body
   border: none;
   padding: 10px 5px;
 }
-#price_calculator tbody tr:nth-child(odd)
+#price_calculator tbody tr:nth-child(even)
 {
   background-color: #BBBDF6;
 }
@@ -79,21 +79,55 @@ body
 {
   /*background-color: #FFA0AB;*/
   /*background-color: #E01A4F;*/
-  background-color: #AAFFDB;
+  /*background-color: #AAFFDB;*/
   padding: 2px;
   border-radius: 3px;
+  /*font-weight: normal;*/
 }
 #price_calculator tbody .column-2,
 #price_calculator tbody .column-3
 {
   border-right: 2px dashed #666;
 }
-.connect-info .column-2
+#price_calculator .connect-info .column-2
 {
   text-align: right;
 }
 
-/* Fields */
+#price_calculator tr.totals
+{
+  font-weight: 700;
+}
+
+#price_calculator tr.totals .qemr
+{
+  /*background-color: #EDA225;*/
+  /*filter: drop-shadow(0px 0px 2px #EDA225);*/
+}
+
+#price_calculator tr.savings
+{
+  text-align: center;
+}
+
+#price_calculator tr.savings td
+{
+  font-size: 22px;
+  font-weight: 700;
+  /*filter: drop-shadow(0px 0px 8px #EDA225);*/
+
+}
+
+#price_calculator tr.savings .amount
+{
+  font-weight: 700;
+  color: #08A2A4;
+  font-size: 24px;
+}
+
+/***********************
+ * Fields
+ ***********************/
 #price_calculator .number-field-wrapper
 {
   display: flex;
@@ -132,7 +166,7 @@ body
 }
 
 /* The switch - the box around the slider */
-.switch {
+#price_calculator .switch {
   position: relative;
   display: inline-block;
   width: 60px;
@@ -140,14 +174,14 @@ body
 }
 
 /* Hide default HTML checkbox */
-.switch input {
+#price_calculator .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
 /* The slider */
-.slider {
+#price_calculator .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -159,7 +193,7 @@ body
   transition: .4s;
 }
 
-.slider:before {
+#price_calculator .slider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -171,25 +205,25 @@ body
   transition: .4s;
 }
 
-input:checked + .slider {
+#price_calculator input:checked + .slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+#price_calculator input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+#price_calculator input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
 /* Rounded sliders */
-.slider.round {
+#price_calculator .slider.round {
   border-radius: 34px;
 }
 
-.slider.round:before {
+#price_calculator .slider.round:before {
   border-radius: 50%;
 }

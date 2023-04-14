@@ -3,6 +3,9 @@
 function calculatorPage()
 {
   $output = '';
+  $output .= htmlWrap('script', '', array('src' => 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'));
+  $output .= htmlWrap('script', file_get_contents(ROOT_PATH . '/modules/calculator/calculator.js'));
+  $output .= htmlWrap('style', file_get_contents(ROOT_PATH . '/modules/calculator/calculator.css'));
 
   /*****************************
    *   Header
@@ -12,12 +15,10 @@ function calculatorPage()
   $table_header .= htmlWrap('th', '', array('class' => array('column-2')));
 
   $label = htmlWrap('span', 'QuickEMR', array('class' => array('label'))) . htmlSolo('br');
-  $label .= htmlWrap('span', '$69.00', array('class' => array('total')));
   $label = htmlWrap('div', $label, array('class' => array('total-wrapper')));
   $table_header .= htmlWrap('th', $label, array('class' => array('column-3', 'qemr')));
 
   $label = htmlWrap('span', 'WebPT', array('class' => array('label'))) . htmlSolo('br');
-  $label .= htmlWrap('span', '$180.00', array('class' => array('total')));
   $label = htmlWrap('div', $label, array('class' => array('total-wrapper')));
   $table_header .= htmlWrap('th', $label, array('class' => array('column-4', 'other')));
 
@@ -71,15 +72,29 @@ function calculatorPage()
   // Reminder calls.
   $reminder_calls = '';
   $reminder_calls .= htmlWrap('td', 'Reminder Calls', array('class' => array('column-1')));
-  $reminder_calls .= htmlWrap('td', fieldNumber('reminder_calls'), array('class' => array('column-2')));
+  $reminder_calls .= htmlWrap('td', fieldNumber('reminder_calls', 0, 50), array('class' => array('column-2')));
   $reminder_calls .= htmlWrap('td', '$0.00', array('id' => 'qemr-calls-value', 'class' => array('column-3')));
   $reminder_calls .= htmlWrap('td', '$0.00', array('id' => 'other-calls-value', 'class' => array('column-4')));
   $table .= htmlWrap('tr', $reminder_calls, array('class' => array('calls-info')));
+
+  // Total.
+  $totals = '';
+  $totals .= htmlWrap('td', 'Monthly Cost', array('colspan' => 2, 'class' => array('column-1', 'column-2')));
+  $totals .= htmlWrap('td', '$69.00', array('class' => array('qemr', 'column-3')));
+  $totals .= htmlWrap('td', '$180.00', array('class' => array('other', 'column-4')));
+  $table .= htmlWrap('tr', $totals, array('class' => array('totals')));
+
+  // Savings.
+  $totals = '';
+  $totals .= htmlWrap('td', 'You save ' . htmlWrap('span', '$111.00', array('class' => array('amount'))) . ' per month!', array('colspan' => 4, 'class' => array('full')));
+  $table .= htmlWrap('tr', $totals, array('class' => array('savings')));
 
   // Combine items.
   $full_table = $table_header . htmlWrap('tbody', $table);
   $output .= htmlWrap('table', $full_table, array('class' => array('price-comparison-table')));
   $output = htmlWrap('div', $output, array('id' => 'price_calculator'));
+
+  die($output);
 
   /***********************
    * Template
@@ -95,7 +110,7 @@ function calculatorPage()
   return $template;
 }
 
-function fieldNumber($id, $min = 0)
+function fieldNumber($id, $min = 0, $increment = 1)
 {
   $field = '';
 
@@ -112,6 +127,7 @@ function fieldNumber($id, $min = 0)
     'type' => 'textfield',
     'min' => $min,
     'value' => $min,
+    'increment' => $increment,
 //    'id' => $id,
     'class' => array('value'),
   );

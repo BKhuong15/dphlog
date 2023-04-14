@@ -8,36 +8,39 @@ $(document).ready(function()
   const OTHER_PART_TIME_PRICE = 180;
 
   const QEMR_SUPPORT_PRICE = 0;
-  const OTHER_SUPPORT_PRICE = 35; // TBD
+  const OTHER_SUPPORT_PRICE = 59;
 
   const QEMR_CONNECT_PRICE = 0;
   const OTHER_CONNECT_PRICE = 399;
 
-  const QEMR_CALL_PRICE = 0.10;
-  const OTHER_CALL_PRICE = 0.20; // TBD
+  const QEMR_CALL_PRICE = 0.12;
+  const OTHER_CALL_PRICE = 0.21;
+
+  let $price_calculator = $('#price_calculator');
 
   // Input IDs.
-  let $full_time_provider_input = $("#full_time_provider input.value");
-  let $qemr_provider_value = $("#qemr-provider-value");
-  let $other_provider_value = $("#other-provider-value");
+  let $full_time_provider_input = $price_calculator.find("#full_time_provider input.value");
+  let $qemr_provider_value = $price_calculator.find("#qemr-provider-value");
+  let $other_provider_value = $price_calculator.find("#other-provider-value");
 
-  let $part_time_provider_input = $("#part_time_provider input.value");
-  let $qemr_pt_provider_value = $("#qemr-pt-provider-value");
-  let $other_pt_provider_value = $("#other-pt-provider-value");
+  let $part_time_provider_input = $price_calculator.find("#part_time_provider input.value");
+  let $qemr_pt_provider_value = $price_calculator.find("#qemr-pt-provider-value");
+  let $other_pt_provider_value = $price_calculator.find("#other-pt-provider-value");
 
-  let $support_input = $("#support input.value");
-  let $qemr_support_value = $("#qemr-support-value");
-  let $other_support_value = $("#other-support-value");
+  let $support_input = $price_calculator.find("#support input.value");
+  let $qemr_support_value = $price_calculator.find("#qemr-support-value");
+  let $other_support_value = $price_calculator.find("#other-support-value");
 
-  let $connect_input = $("#connect-input");
-  let $qemr_connect_value = $("#qemr-connect-value");
-  let $other_connect_value = $("#other-connect-value");
+  let $connect_input = $price_calculator.find("#connect-input");
+  let $qemr_connect_value = $price_calculator.find("#qemr-connect-value");
+  let $other_connect_value = $price_calculator.find("#other-connect-value");
 
-  let $reminder_calls_input = $("#reminder_calls input.value");
-  let $qemr_reminder_calls_value = $("#qemr-calls-value");
-  let $other_reminder_calls_value = $("#other-calls-value");
+  let $reminder_calls_input = $price_calculator.find("#reminder_calls input.value");
+  let $qemr_reminder_calls_value = $price_calculator.find("#qemr-calls-value");
+  let $other_reminder_calls_value = $price_calculator.find("#other-calls-value");
 
-  let $totals_row = $("tr.table-header");
+  let $totals_row = $price_calculator.find("tr.totals");
+  let $savings_row = $price_calculator.find("tr.savings");
 
   // Prices * input values.
   let qemr_ft_amount = 0;
@@ -56,9 +59,11 @@ $(document).ready(function()
   $totals_row.on("refresh", function()
   {
     let total = (qemr_ft_amount + qemr_pt_amount + qemr_calls_amount + qemr_support_amount + qemr_connect_amount);
-    $(".qemr .total-wrapper .total").text("$" + total.toFixed(2));
+    $totals_row.find(".qemr").text("$" + total.toFixed(2));
     let other_total = other_ft_amount + other_pt_amount + other_calls_amount + other_support_amount + other_connect_amount;
-    $(".other .total-wrapper .total").text("$" + other_total.toFixed(2));
+    $totals_row.find(".other").text("$" + other_total.toFixed(2));
+    let savings = other_total - total;
+    $savings_row.find(".amount").text("$" + savings.toFixed(2));
   });
 
   // Full time provider cells.
@@ -121,6 +126,7 @@ $(document).ready(function()
   {
     let $this = $(this);
     let $value = $this.find('input.value');
+    let $increment = parseInt($value.attr('increment'));
     $this.find('.minus').click(function()
     {
       if ($value.val() <= parseInt($value.attr('min')))
@@ -128,13 +134,13 @@ $(document).ready(function()
         $this.val(0);
         return;
       }
-      $value.val(parseInt($value.val()) - 1);
+      $value.val(parseInt($value.val()) - $increment);
       $value.change();
     });
 
     $this.find('.plus').click(function()
     {
-      $value.val(parseInt($value.val()) + 1);
+      $value.val(parseInt($value.val()) + $increment);
       $value.change();
     });
   });
