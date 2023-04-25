@@ -19,9 +19,10 @@ function timeForm()
   $form->addField($field);
 
   // Timezone
+  $user = getActiveUser();
   $list = getTimeTimezoneList();
   $field = new FieldSelect('timezone', 'Timezone', $list);
-  $field->setValue('America/New_York');
+  $field->setValue($user['timezone']);
   $form->addField($field);
 
   // Convert button
@@ -82,6 +83,7 @@ function timeClock($timezone, $users_in_zone)
 function getTimeTimezoneList($key = FALSE)
 {
   $list = array(
+    'UTC' => 'UTC',
     'America/New_York' => 'Eastern',
     'America/Chicago' => 'Central',
     'America/Denver' => 'Mountain',

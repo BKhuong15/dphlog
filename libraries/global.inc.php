@@ -525,3 +525,12 @@ function getListItem($list, $key, $default = FALSE)
   }
   return $list[$key];
 }
+
+function iis($array, $key, $default = FALSE)
+{
+  if (is_array($array) && array_key_exists($key, $array))
+  {
+    return $array[$key];
+  }
+  return $default;
+}
