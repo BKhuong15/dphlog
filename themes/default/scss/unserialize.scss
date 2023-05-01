@@ -1,0 +1,36 @@
+#unserialize
+{
+  float: left;
+  width: 500px;
+}
+#unserialize .field
+{
+  max-width: 480px;
+}
+#unserialize .field input,
+#unserialize .field textarea
+{
+  max-width: 480px;
+}
+
+.unserialize_output
+{
+  clear: left;
+  box-sizing: border-box;
+  width: 1280px;
+  background-color: white;
+  height: 500px;
+  border: 1px solid black;
+  /*margin-left: 20px;*/
+  margin: 20px;
+  padding: 5px;
+  overflow: scroll;
+  float: left;
+  /*clear: left;*/
+}
+
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: black; }

@@ -71,7 +71,7 @@ function home()
 {
   $template = new HTMLTemplate();
   $template->setTitle('DPH Log');
-  $template->addCssFilePath('/modules/log/log.css');
+  $template->addCssFilePath('/themes/default/css/log.css');
   $template->addJsFilePath('/modules/log/log.js');
 
   $template->setMenu(menu());

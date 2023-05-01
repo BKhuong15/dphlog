@@ -1,0 +1,50 @@
+body
+{
+  background-color: gray;
+}
+
+tr
+{
+  color: #EEE;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+tr.assert
+{
+  background-color: lightseagreen;
+}
+
+tr.php_fatal_error,
+tr.php_parse_error
+{
+  background-color: lightcoral;
+}
+
+tr.php_warning
+{
+  background-color: lightskyblue;
+}
+
+tr.debug
+{
+  background-color: gray;
+}
+
+td.column-1,
+td.column-2,
+td.column-3
+{
+  vertical-align: top;
+}
+
+td.column-4 pre
+{
+  max-height: 100px;
+  overflow-y: scroll;
+}
+
+input
+{
+  background-color: #BB86FC;
+}

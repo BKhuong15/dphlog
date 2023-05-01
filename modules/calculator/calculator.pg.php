@@ -102,7 +102,7 @@ function calculatorPage()
   $template = new HTMLTemplate();
   $template->setTitle('Epoch Converter');
   $template->addCssFilePath('https://fonts.googleapis.com/css?family=Montserrat');
-  $template->addCssFilePath('/modules/calculator/calculator.css');
+  $template->addCssFilePath('/modules/calculator/css/calculator.css');
   $template->addJsFilePath('/modules/calculator/calculator.js');
   $template->setMenu(menu());
   $template->setBody($output);

@@ -7,7 +7,7 @@ function timePage()
   // Template.
   $template = new HTMLTemplate();
   $template->setTitle('Epoch Converter');
-  $template->addCssFilePath('/modules/time/time.css');
+  $template->addCssFilePath('/themes/default/css/time.css');
   $template->addJsFilePath('/modules/time/time.js');
   $template->setMenu(menu());
 

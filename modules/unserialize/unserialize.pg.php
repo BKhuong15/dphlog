@@ -3,7 +3,7 @@ function phpUnserializePage()
 {
   $template = new HTMLTemplate();
   $template->setTitle('Unserialize');
-  $template->addCssFilePath('/modules/unserialize/unserialize.css');
+  $template->addCssFilePath('/themes/default/css/unserialize.css');
   $template->addJsFilePath('/modules/unserialize/unserialize.js');
 
   $template->setMenu(menu());

@@ -3,7 +3,7 @@ function jsonFormatterPage()
 {
   $template = new HTMLTemplate();
   $template->setTitle('DPH Log');
-  $template->addCssFilePath('/modules/json_formatter/json_formatter.css');
+  $template->addCssFilePath('/themes/default/css/json_formatter.css');
   $template->addJsFilePath('/modules/json_formatter/json_formatter.js');
 
   $template->setMenu(menu());
