@@ -29,6 +29,8 @@ function timeForm()
   $field = new FieldSubmit('convert-button', 'Convert');
   $form->addField($field);
 
+  $field = new FieldSubmit('now-button', 'Now');
+  $form->addField($field);
   return $form;
 }
 

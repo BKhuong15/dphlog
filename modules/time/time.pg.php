@@ -7,7 +7,7 @@ function timePage()
   // Template.
   $template = new HTMLTemplate();
   $template->setTitle('Epoch Converter');
-  $template->addCssFilePath('/modules/time/time.css');
+  $template->addCssFilePath('/modules/time/time-jazel.css');
   $template->addJsFilePath('/modules/time/time.js');
   $template->setMenu(menu());
 
@@ -26,8 +26,8 @@ function timePage()
   $output .= htmlWrap('div', $top_clock, array('class' => array('date-and-epoch')));
 
   // Reset/Now button.
-  $now_button = new FieldSubmit('now-button', 'Now');
-  $output .= htmlWrap('div', $now_button, array('class' => array('right-form')));
+//  $now_button = new FieldSubmit('now-button', 'Now');
+//  $output .= htmlWrap('div', $now_button, array('class' => array('right-form')));
 
   // Wrap Clock, Form, and Now button.
   $output = htmlWrap('div', $output, array('class' => array('top-section')));
