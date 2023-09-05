@@ -10,7 +10,6 @@ $(document).ready(function()
   const MILI_SEC = 1000;
 
   let $form = $('#time_converter');
-  let $right_form = $('.right-form');
   let $date_and_epoch = $('.date-and-epoch');
 
   // Initialize clocks.
@@ -39,7 +38,7 @@ $(document).ready(function()
   /**********************************************************
    * Now/reset button, resets the clocks to the current time
    **********************************************************/
-  $right_form.find('.now-button input').click(function(e)
+  $form.find('.now-button input').click(function(e)
     {
       e.preventDefault();
       state = 'now';

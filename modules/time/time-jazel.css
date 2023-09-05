@@ -1,0 +1,344 @@
+#menu
+{
+    background-color: #DEDEDE;
+    white-space: nowrap;
+    float: right;
+    justify-content: flex-end;
+}
+
+.label
+{
+    color: #08A2A4;
+    font-weight: 700;
+}
+
+a
+{
+    color: #0A0A0A;
+    text-decoration: none;
+}
+
+#menu ul
+{
+    display: none;
+    position: absolute;
+    background-color: white;
+    margin: 0;
+    padding: 5px;
+}
+
+h1
+{
+    font-size: 22px;
+    margin: 0;
+    text-align: center;
+    background-color: #E7E7E7;
+}
+
+.convert-button input[type=submit]
+{
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+
+    padding: 2px 20px 3px 20px;
+    border-radius: 15px;
+    color: #FAFAFA;
+    background-color: #08A2A4;
+    cursor: pointer;
+}
+
+.now-button input[type=submit]
+{
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+
+    padding: 2px 20px 3px 20px;
+    border-radius: 15px;
+    color: #FAFAFA;
+    background-color: #08A2A4;
+    cursor: pointer;
+}
+
+body
+{
+    background-color:  #FAFAFA;
+}
+
+#time_converter
+{
+    background-color: #FAFAFA;
+    display: flex;
+    align-items: center;
+    border: 1px solid hsl(0deg 0% 50%);
+    gap: 8px;
+    padding: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+#time_converter div
+{
+    text-align: center;
+}
+
+input, select
+{
+    background-color: #E7E7E7;
+    padding: 4px;
+}
+
+.timestamp
+{
+    flex-grow: 0;
+    flex-basis: 120px;
+}
+
+.date
+{
+    flex-grow: 0;
+    flex-basis: 170px;
+}
+
+.time
+{
+    flex-grow: 0;
+    flex-basis: 170px;
+}
+
+.timezone
+{
+    flex-grow: 0;
+    flex-basis: 170px;
+}
+
+.convert-button
+{
+    flex-grow: 0;
+    flex-basis: 70px;
+}
+.now-button
+{
+    flex-grow: 0;
+    flex-basis: 70px;
+}
+
+.date-and-epoch
+{
+    text-align: center;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    /*justify-content: center;*/
+    flex-direction: row;
+    font-size: 20px;
+    background-color: #FAFAFA;
+    margin: 0 5px;
+    padding: 10px;
+    font-size: 26px;
+    margin-left: 585px;
+}
+
+.date-and-epoch div
+{
+    width: 300px;
+}
+
+.clock-container
+{
+    border: 1px solid hsl(0deg 0% 50%);
+    background-color:  #FAFAFA;
+}
+.clock
+{
+    background: #E7E7E7;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    padding: 2px;
+    border: 2px solid #16344f;
+    box-shadow: -4px -4px 10px rgba(67,67,67,0.5),
+    inset 4px 4px 10px rgba(0,0,0,0.5),
+    inset -4px -4px 10px rgba(67,67,67,0.5),
+    4px 4px 10px rgba(0,0,0,0.3);
+    border-radius: 50%;
+}
+
+.clock-section .user-list li
+{
+    background-color: #E7E7E7;
+    padding: 10px;
+}
+
+.outer-clock-face
+{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
+.outer-clock-face::after
+{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.outer-clock-face::after,
+.outer-clock-face::before,
+.outer-clock-face .marking
+{
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: #08A2A4;
+    z-index: 0;
+    left: 49%;
+}
+
+.outer-clock-face .marking
+{
+    background: #6391bb;
+    width: 3px;
+}
+
+.outer-clock-face .marking.marking-one
+{
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    transform: rotate(30deg)
+}
+
+.outer-clock-face .marking.marking-two
+{
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    transform: rotate(60deg)
+}
+
+.outer-clock-face .marking.marking-three
+{
+    -webkit-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    transform: rotate(120deg)
+}
+
+.outer-clock-face .marking.marking-four
+{
+    -webkit-transform: rotate(150deg);
+    -moz-transform: rotate(150deg);
+    transform: rotate(150deg)
+}
+
+.inner-clock-face
+{
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    background: #E7E7E7;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    z-index: 1;
+}
+
+.inner-clock-face::before
+{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 18px;
+    margin-left: -9px;
+    margin-top: -6px;
+    background: #4d4b63;
+    z-index: 11;
+    border: 2px solid #d9701b;
+}
+
+.hand
+{
+    width: 50%;
+    right: 50%;
+    height: 6px;
+    background: #08A2A4;
+    position: absolute;
+    top: 50%;
+    border-radius: 6px;
+    transform-origin: 100%;
+    transform: rotate(90deg);
+    transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+
+.hand.hour-hand
+{
+    width: 30%;
+    z-index: 3;
+}
+
+.hand.min-hand
+{
+    height: 3px;
+    z-index: 10;
+    width: 40%;
+}
+
+.hand.second-hand
+{
+    background: #ee791a;
+    width: 45%;
+    height: 2px;
+}
+
+.clock-container
+{
+    width: 100%;
+}
+
+.clock-section
+{
+    display: flex;
+    margin: 0 auto;
+    width: 1200px;
+}
+
+.clock-wrap
+{
+    float: left;
+    padding: 10px;
+}
+
+.clock-wrap .header,
+.clock-wrap .time,
+.clock-wrap .timezone
+{
+    text-align: center;
+    padding: 10px;
+    color: #08A2A4;
+    font-weight: 600;
+}
+
+.clock-wrap .time
+{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.clearfix
+{
+    clear: both;
+}
+
+.clock-wrap.current-timezone
+{
+    border: 2px solid #FFC0CB;
+    padding: 8px;
+}
