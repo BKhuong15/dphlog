@@ -62,6 +62,7 @@ function getRegistry()
     'unserialize' => 'phpUnserializePage', /** @uses phpUnserializePage() */
     'ajax/unserialize' => 'phpUnserializeAjax', /** @uses phpUnserializeAjax() */
     'calculator' => 'calculatorPage', /** @uses calculatorPage() */
+    'calculator2' => 'calculator2Page', /** @uses calculator2Page() */
   );
 
   return $registry;
